@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mycologie Médicale — Cours Complet 4ème Année</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #0a0e17;
+    --surface: #111828;
+    --surface2: #1a2338;
+    --accent: #4fc3f7;
+    --accent2: #81c784;
+    --accent3: #ffb74d;
+    --danger: #ef5350;
+    --text: #e8eaf0;
+    --text-muted: #8892a4;
+    --border: rgba(79,195,247,0.15);
+    --gold: #ffd54f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #0a0e17 0%, #0d1b2e 50%, #0a1628 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 24px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '🍄';
+    position: absolute;
+    font-size: 200px;
+    opacity: 0.04;
+    top: -40px; left: -40px;
+    pointer-events: none;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px,4vw,40px);
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .header p {
+    color: var(--text-muted);
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .badge-row {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 8px; margin-top: 20px;
+  }
+  .badge {
+    background: rgba(79,195,247,0.1);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .badge:hover, .badge.active {
+    background: var(--accent);
+    color: #000;
+  }
+
+  /* NAV */
+  .nav-tabs {
+    display: flex; overflow-x: auto;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    gap: 0;
+    padding: 0 12px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .nav-tab {
+    padding: 14px 18px;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* MAIN */
+  .main { max-width: 900px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  /* SECTIONS */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ESSENTIEL CARDS */
+  .essentiel-grid {
+    display: grid; gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+    margin-bottom: 40px;
+  }
+  .essentiel-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 3px solid var(--accent);
+    transition: transform 0.2s;
+  }
+  .essentiel-card:hover { transform: translateY(-2px); }
+  .essentiel-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .essentiel-card ul { padding-left: 16px; }
+  .essentiel-card li { font-size: 13.5px; margin-bottom: 4px; color: var(--text-muted); }
+  .essentiel-card li strong { color: var(--text); }
+
+  /* CHAPTER */
+  .chapter-section { margin-bottom: 48px; }
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .chapter-title .num {
+    background: var(--accent);
+    color: #000;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .rubrique {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .rubrique-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 18px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.2s;
+  }
+  .rubrique-header:hover { background: var(--surface2); }
+  .rubrique-icon { font-size: 18px; }
+  .rubrique-label { flex: 1; }
+  .rubrique-arrow { color: var(--text-muted); transition: transform 0.2s; font-size: 12px; }
+  .rubrique.open .rubrique-arrow { transform: rotate(90deg); }
+  .rubrique-body {
+    display: none;
+    padding: 0 18px 16px;
+    font-size: 14.5px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+  .rubrique.open .rubrique-body { display: block; }
+  .rubrique-body p { margin-bottom: 10px; }
+  .rubrique-body ul { padding-left: 20px; margin-bottom: 10px; }
+  .rubrique-body li { margin-bottom: 5px; }
+  .rubrique-body strong { color: var(--text); }
+  .rubrique-body .tag {
+    display: inline-block;
+    background: rgba(79,195,247,0.1);
+    border: 1px solid rgba(79,195,247,0.3);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin: 2px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .rubrique-body .tag.green { background: rgba(129,199,132,0.1); border-color: rgba(129,199,132,0.3); color: var(--accent2); }
+  .rubrique-body .tag.orange { background: rgba(255,183,77,0.1); border-color: rgba(255,183,77,0.3); color: var(--accent3); }
+  .rubrique-body .tag.red { background: rgba(239,83,80,0.1); border-color: rgba(239,83,80,0.3); color: var(--danger); }
+
+  /* CAS CLINIQUES DIDACTIQUES */
+  .cas-card {
+    background: linear-gradient(135deg, var(--surface), var(--surface2));
+    border: 1px solid rgba(255,183,77,0.2);
+    border-left: 3px solid var(--accent3);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .cas-card h4 {
+    color: var(--accent3);
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .cas-card .scenario { font-size: 14px; margin-bottom: 12px; line-height: 1.7; }
+  .cas-card .resolution {
+    background: rgba(129,199,132,0.08);
+    border: 1px solid rgba(129,199,132,0.2);
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 13.5px;
+    margin-top: 10px;
+    display: none;
+  }
+  .cas-card.show-resolution .resolution { display: block; }
+  .btn-reveal {
+    background: rgba(129,199,132,0.15);
+    border: 1px solid var(--accent2);
+    color: var(--accent2);
+    padding: 6px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .btn-reveal:hover { background: var(--accent2); color: #000; }
+
+  /* EVALUATION */
+  .eval-section { }
+  .eval-header {
+    background: linear-gradient(135deg, var(--surface2), #1a1f35);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  .eval-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .eval-header p { color: var(--text-muted); font-size: 13px; }
+
+  .qcm-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+  }
+  .qcm-card.correct { border-color: var(--accent2); background: rgba(129,199,132,0.05); }
+  .qcm-card.wrong { border-color: var(--danger); background: rgba(239,83,80,0.05); }
+
+  .qcm-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .qcm-q {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .qcm-options { display: flex; flex-direction: column; gap: 8px; }
+  .qcm-option {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+  }
+  .qcm-option:hover { border-color: var(--accent); background: rgba(79,195,247,0.05); }
+  .qcm-option.selected { border-color: var(--accent); background: rgba(79,195,247,0.1); }
+  .qcm-option.correct-ans { border-color: var(--accent2); background: rgba(129,199,132,0.15); color: var(--accent2); }
+  .qcm-option.wrong-ans { border-color: var(--danger); background: rgba(239,83,80,0.1); color: var(--danger); }
+  .qcm-option input[type=radio] { display: none; }
+  .qcm-radio {
+    width: 18px; height: 18px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .qcm-option.selected .qcm-radio,
+  .qcm-option.correct-ans .qcm-radio { border-color: var(--accent2); }
+  .qcm-option.wrong-ans .qcm-radio { border-color: var(--danger); }
+
+  .qcm-feedback {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    display: none;
+  }
+  .qcm-feedback.show { display: block; }
+  .qcm-feedback.ok { background: rgba(129,199,132,0.1); color: var(--accent2); }
+  .qcm-feedback.nok { background: rgba(239,83,80,0.1); color: var(--danger); }
+
+  /* CAS CLINIQUES QCM */
+  .cas-qcm-block {
+    background: var(--surface);
+    border: 1px solid rgba(255,183,77,0.2);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  .cas-qcm-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent3);
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .cas-qcm-vignette {
+    background: var(--surface2);
+    border-left: 3px solid var(--accent3);
+    padding: 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+  .cas-qcm-vignette strong { color: var(--gold); }
+
+  /* SCORE */
+  .score-board {
+    display: none;
+    background: linear-gradient(135deg, var(--surface2), #101c30);
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    margin-top: 32px;
+  }
+  .score-board.show { display: block; }
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .score-label { color: var(--text-muted); font-size: 14px; margin-top: 8px; }
+  .score-mention { font-size: 22px; font-weight: 700; margin-top: 16px; }
+  .correction-list { text-align: left; margin-top: 24px; }
+  .correction-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  .ci-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+  .ci-text { color: var(--text-muted); }
+  .ci-text strong { color: var(--text); }
+
+  .btn-submit {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 24px;
+    transition: all 0.2s;
+    font-family: 'Source Sans 3', sans-serif;
+    display: block;
+    width: 100%;
+  }
+  .btn-submit:hover { background: #81d4fa; transform: translateY(-1px); }
+  .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .btn-reset {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: all 0.2s;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .btn-reset:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* SEPARATOR */
+  .sep {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    background: rgba(79,195,247,0.06);
+    border: 1px solid rgba(79,195,247,0.2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    margin: 12px 0;
+    color: var(--text);
+  }
+  .highlight-box.warn {
+    background: rgba(255,183,77,0.06);
+    border-color: rgba(255,183,77,0.2);
+  }
+  .highlight-box.danger {
+    background: rgba(239,83,80,0.06);
+    border-color: rgba(239,83,80,0.2);
+  }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+  .data-table th {
+    background: var(--surface2);
+    color: var(--accent);
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .data-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* PROGRESS */
+  .progress-bar-wrap {
+    background: var(--surface2);
+    height: 6px;
+    border-radius: 3px;
+    margin: 8px 0 16px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 3px;
+    transition: width 0.5s;
+    width: 0%;
+  }
+
+  /* RESPONSIVE */
+  @media(max-width:600px) {
+    .nav-tab { padding: 12px 12px; font-size: 12px; }
+    .chapter-title { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🍄 Mycologie Médicale</h1>
+  <p>Cours complet · Parasitologie & Mycologie · 4ème Année</p>
+  <div class="badge-row">
+    <span class="badge">Généralités</span>
+    <span class="badge">Champignons Dimorphiques</span>
+    <span class="badge">Pneumocystose</span>
+    <span class="badge">Malassezioses</span>
+    <span class="badge">Aspergilloses</span>
+    <span class="badge">Cryptococcose</span>
+    <span class="badge">Candidoses</span>
+    <span class="badge">Dermatophytes</span>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="showTab('essentiel')">⭐ Essentiels</div>
+  <div class="nav-tab" onclick="showTab('cours')">📖 Cours Complet</div>
+  <div class="nav-tab" onclick="showTab('qcm20')">✏️ QCM (20)</div>
+  <div class="nav-tab" onclick="showTab('cas-cliniques')">🏥 Cas Cliniques</div>
+</div>
+
+<div class="main">
+
+<!-- ============ ESSENTIEL ============ -->
+<div id="essentiel" class="section active">
+  <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);margin-bottom:20px;">⭐ Ce que tu dois absolument retenir</h2>
+
+  <div class="essentiel-grid">
+
+    <div class="essentiel-card" style="border-left-color:#4fc3f7">
+      <h3>🔬 Généralités Mycologie</h3>
+      <ul>
+        <li><strong>Mycose ≠ intoxication :</strong> infection par champignon microscopique</li>
+        <li><strong>Eucaryotes</strong> → plus proches des cellules humaines → traitement difficile</li>
+        <li>2 formes : <strong>levures</strong> (unicellulaire, bourgeonnement) / <strong>filamenteux</strong> (hyphes + mycélium)</li>
+        <li>Facteurs favorisants : VIH/SIDA, diabète, corticoïdes, immunosuppresseurs, grossesse</li>
+        <li>Diagnostic : <strong>Examen direct + culture sur Sabouraud</strong></li>
+        <li>Nodule mycosique : structure en cocarde (noyau purulent → histiocytes → granulome → fibrose)</li>
+      </ul>
+    </div>
+
+    <div class="essentiel-card" style="border-left-color:#ce93d8">
+      <h3>🌿 Champignons Dimorphiques</h3>
+      <ul>
+        <li><strong>Dimorphisme thermique :</strong> levure à 37°C (in vivo), filament à 25°C (sol)</li>
+        <li><strong>Histoplasma capsulatum :</strong> fientes pigeons/chauves-souris, VIH (CD4&lt;150)</li>
+        <li>H. américaine (2-4µm) vs H. africaine (5-20µm, lésions cutanées+osseuses)</li>
+        <li><strong>Coccidioïdomycose :</strong> désert américain, sphérules à l'examen direct</li>
+        <li><strong>Blastomycose nord-américaine :</strong> levure à large base de bourgeonnement</li>
+        <li>Traitement : <strong>Itraconazole</strong> (formes légères) / <strong>Amphotéricine B</strong> (formes sévères)</li>
+        <li>Pas de transmission interhumaine — réservoir environnemental</li>
+      </ul>
+    </div>
+
+    <div class="essentiel-card" style="border-left-color:#81c784">
+      <h3>🫁 Pneumocystose</h3>
+      <ul>
+        <li>Agent : <strong>Pneumocystis jiroveci</strong> (anciennement P. carinii)</li>
+        <li>Infection opportuniste — VIH avec <strong>CD4 &lt; 200/mm³</strong></li>
+        <li>Transmission <strong>aérienne interhumaine</strong> — réservoir strictement humain</li>
+        <li>Clinique : toux sèche, fièvre, dyspnée, pneumopathie interstitielle</li>
+        <li>Diagnostic : LBA + coloration / PCR</li>
+        <li>Traitement : <strong>Cotrimoxazole</strong> (1er choix curatif ET prophylactique)</li>
+        <li>Prophylaxie dès CD4 &lt; 200 ; arrêt si CD4 > 200 pendant 3 mois</li>
+      </ul>
+    </div>
+
+    <div class="essentiel-card" style="border-left-color:#ffb74d">
+      <h3>🌸 Malassezioses</h3>
+      <ul>
+        <li>Agent : <strong>Malassezia furfur</strong> (épisaprophyte — présent chez ~100% des hommes)</li>
+        <li><strong>Pityriasis versicolor :</strong> macules hypo/hyperpigmentées, tronc, squameuses</li>
+        <li><strong>Pityriasis capitis</strong> (pellicules) + dermatite séborrhéique</li>
+        <li>Diagnostic : examen direct (aspect "spaghetti et boulettes")</li>
+        <li>Traitement topique : kétoconazole shampooing, ciclopiroxolamine</li>
+        <li>Rechutes fréquentes — pas d'immunité durable</li>
+      </ul>
+    </div>
+
+    <div class="essentiel-card" style="border-left-color:#ef5350">
+      <h3>🦠 Aspergilloses</h3>
+      <ul>
+        <li>Agent : <strong>Aspergillus fumigatus</strong> +++ (300 espèces)</li>
+        <li>Contamination par <strong>inhalation de spores</strong> — PAS de transmission interhumaine</li>
+        <li>3 formes : <strong>Aspergillome</strong> (cavité), <strong>Invasive</strong> (immunodéprimés), <strong>Allergique</strong></li>
+        <li>Aspergillome : image en <strong>grelot</strong> à la radio, hémoptysies</li>
+        <li>Aspergillose invasive : mortalité élevée chez neutropéniques</li>
+        <li>Diagnostic : galactomannane sérique, PCR, culture sur Sabouraud</li>
+        <li>Traitement : <strong>Voriconazole</strong> (1er choix invasive) / Itraconazole (aspergillome)</li>
+      </ul>
+    </div>
+
+    <div class="essentiel-card" style="border-left-color:#ffd54f">
+      <h3>🧠 Cryptococcose</h3>
+      <ul>
+        <li>Agent : <strong>Cryptococcus neoformans</strong> — levure encapsulée</li>
+        <li>Réservoir : <strong>fientes de pigeons</strong> — transmission par inhalation</li>
+        <li>Survient si CD4 <strong>&lt; 100/mm³</strong></li>
+        <li>Forme principale : <strong>méningo-encéphalite</strong> (céphalées, fièvre, raideur nuque)</li>
+        <li>Diagnostic : encre de Chine (LCR), CrAg sérique</li>
+        <li>Traitement 3 phases : <strong>AmB + 5-FC</strong> (induction) → fluconazole (consolidation) → fluconazole 200mg/j (maintenance)</li>
+        <li>Hypertension intracrânienne → ponctions lombaires évacuatrices</li>
+      </ul>
+    </div>
+
+    <div class="essentiel-card" style="border-left-color:#4db6ac">
+      <h3>🍞 Candidoses</h3>
+      <ul>
+        <li>Agent : <strong>Candida albicans</strong> (commensal des muqueuses — pouvoir pathogène conditionnel)</li>
+        <li>Facteurs clés : antibiotiques, corticoïdes, diabète, VIH, cathéter, grossesse</li>
+        <li><strong>Muguet</strong> = candidose oropharyngée pseudomembraneuse (plaques blanches)</li>
+        <li>Candidose vulvo-vaginale : prurit intense, leucorrhées "lait caillé" (80% C. albicans)</li>
+        <li>Candidémie : fièvre résistante aux antibiotiques + AEG</li>
+        <li>Traitement superficiel : <strong>azolés topiques</strong> ; systémique : <strong>fluconazole</strong> ou échinocandines</li>
+      </ul>
+    </div>
+
+    <div class="essentiel-card" style="border-left-color:#a5d6a7">
+      <h3>💅 Dermatophytes</h3>
+      <ul>
+        <li>3 genres : <strong>Trichophyton, Microsporum, Epidermophyton</strong></li>
+        <li>Kératinophiles + kératinolytiques → peau, poils, ongles</li>
+        <li>Classification : anthropophiles (H→H) / zoophiles (animal→H) / géophiles (sol→H)</li>
+        <li><strong>Teignes tondantes :</strong> microsporiques (grandes plaques) / trichophytiques (petites plaques)</li>
+        <li>Fluorescence UV : Microsporum (+) / Trichophyton (-)</li>
+        <li>Traitement teignes : <strong>Griséofulvine</strong> per os (1er choix enfants)</li>
+        <li>Onyxis : Terbinafine ou Itraconazole (traitement long 3-18 mois)</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="highlight-box warn">
+    💡 <strong>Points clés transversaux :</strong> (1) CD4 &lt; 200 → Pneumocystose + Candidose ; CD4 &lt; 100 → Cryptococcose. (2) Amphotéricine B = traitement des formes sévères de presque toutes les mycoses. (3) Pas de transmission interhumaine pour Aspergillus, Cryptococcus, Histoplasma. (4) Toujours éliminer les facteurs favorisants en parallèle du traitement antifongique.
+  </div>
+</div>
+
+<!-- ============ COURS COMPLET ============ -->
+<div id="cours" class="section">
+
+  <!-- CHAP 0 : GÉNÉRALITÉS -->
+  <div class="chapter-section">
+    <div class="chapter-title"><span class="num">0</span> Généralités en Mycologie Médicale</div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">📌</span><span class="rubrique-label">Définition</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>La <strong>mycologie médicale</strong> est la branche de la microbiologie qui étudie les champignons (fungi) pathogènes pour l'homme, les mycoses et les interactions hôte-champignon.</p>
+        <p>Une <strong>mycose</strong> est une infection provoquée par le développement chez un être vivant de champignons microscopiques (micromycètes). À distinguer des intoxications (amanites) et mycotoxinoses (aflatoxines) qui ne sont pas infectieuses.</p>
+        <p>Les micromycètes sont des <strong>eucaryotes</strong> (cellules à noyau défini), hétérotrophes, plus proches des cellules humaines que les bactéries → traitement plus complexe.</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🌍</span><span class="rubrique-label">Épidémiologie & Classification</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Plus de <strong>100 000 espèces</strong> décrites, quelques centaines pathogènes pour l'homme.</p>
+        <p>Classification pratique :</p>
+        <ul>
+          <li><strong>Champignons filamenteux :</strong> thalle = hyphes + mycélium (cloisonnés ou non)</li>
+          <li><strong>Champignons levuriformes :</strong> cellules unicellulaires ovalaires, bourgeonnement</li>
+          <li><strong>Champignons dimorphiques :</strong> levure à 37°C, filament à 25°C (dimorphisme thermique)</li>
+        </ul>
+        <p>4 groupes selon vie saprophytique :</p>
+        <ul>
+          <li><span class="tag">Exosaprophytes</span> du sol (Dermatophytes, Histoplasma, Aspergillus)</li>
+          <li><span class="tag">Endosaprophytes</span> commensaux (Candida albicans)</li>
+          <li><span class="tag">Endo-exosaprophytes</span> (Cryptococcus neoformans — jabot des pigeons ET cavités humaines)</li>
+          <li><span class="tag">Épisaprophytes</span> cutanés (Malassezia furfur — 100% des hommes)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🚪</span><span class="rubrique-label">Voies de contamination & Transmission</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <ul>
+          <li><strong>Voie cutanée/transcutanée :</strong> dermatophytes, candida (macération)</li>
+          <li><strong>Voie aérienne/pulmonaire :</strong> Aspergillus, Histoplasma, Cryptococcus (spores inhalées)</li>
+          <li><strong>Voie muqueuse :</strong> Candida (digestif, génital)</li>
+          <li><strong>Voie digestive :</strong> Candida (passage de la muqueuse)</li>
+          <li><strong>Voie sanguine (iatrogène) :</strong> Candida parapsilosis (cathéter)</li>
+        </ul>
+        <p>Sources : sol, air, végétaux, homme (anthropophiles), animaux (zoophiles).</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">⚠️</span><span class="rubrique-label">Facteurs favorisants</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>Intrinsèques :</strong></p>
+        <ul>
+          <li>Physiologiques : nouveau-né, sujet âgé, grossesse (candidose ×3 au 3e trimestre)</li>
+          <li>Pathologiques : VIH/SIDA, diabète, hémopathies malignes, insuffisance rénale</li>
+        </ul>
+        <p><strong>Extrinsèques/iatrogènes :</strong></p>
+        <ul>
+          <li>Antibiothérapie → candidose digestive</li>
+          <li>Corticoïdes/immunosuppresseurs → candidose, cryptococcose, aspergillose</li>
+          <li>Cathéter vasculaire → candidémie à C. parapsilosis</li>
+          <li>Chirurgie digestive, greffe de moelle (aspergillose pulmonaire invasive)</li>
+          <li>Textiles synthétiques → pénétration des dermatophytes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔬</span><span class="rubrique-label">Diagnostic général</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <ul>
+          <li><strong>Examen direct :</strong> prélèvement → état frais ou colorations (MGG, PAS, Gomori, encre de Chine)</li>
+          <li><strong>Culture :</strong> milieu de <strong>Sabouraud</strong> à 25-30°C (formes saprophytiques) et 37°C (levures)</li>
+          <li><strong>Sérologie :</strong> anticorps circulants (peut être mis en défaut chez immunodéprimés)</li>
+          <li><strong>Antigènes circulants :</strong> galactomannane (Aspergillus), CrAg (Cryptococcus)</li>
+          <li><strong>Biologie moléculaire :</strong> PCR — sensibilité/spécificité ~100%</li>
+          <li><strong>Histologie :</strong> biopsie + colorations spéciales</li>
+        </ul>
+        <div class="highlight-box">⚠️ Ne pas envoyer le malade sous traitement antifongique pour prélèvement mycologique. Laisser si possible le biologiste effectuer les prélèvements.</div>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">💊</span><span class="rubrique-label">Antifongiques (vue d'ensemble)</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <table class="data-table">
+          <tr><th>Classe</th><th>Molécule</th><th>Indications principales</th></tr>
+          <tr><td>Polyènes</td><td>Amphotéricine B</td><td>Formes sévères/systémiques (spectre large)</td></tr>
+          <tr><td>Azolés</td><td>Fluconazole, Itraconazole, Voriconazole</td><td>Candidose, Aspergillose, Cryptococcose, Dimorphiques</td></tr>
+          <tr><td>Échinocandines</td><td>Caspofungine, Micafungine</td><td>Candidoses systémiques (anti-Aspergillus)</td></tr>
+          <tr><td>Allylamines</td><td>Terbinafine</td><td>Dermatophytes (ongles, peau)</td></tr>
+          <tr><td>Griséofulvine</td><td>Griséofulvine</td><td>Teignes du cuir chevelu (enfants)</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- CAS DIDACTIQUES GÉNÉRALITÉS -->
+    <hr class="sep">
+    <h3 style="color:var(--accent3);font-size:16px;margin-bottom:16px;">🏥 Cas Cliniques Didactiques — Généralités</h3>
+
+    <div class="cas-card">
+      <h4>CAS 1 — Candidose iatrogène</h4>
+      <p class="scenario">M. Jean, 58 ans, hospitalisé pour pneumopathie, traité par amoxicilline-acide clavulanique depuis 10 jours. Il développe un muguet buccal avec plaques blanches adhérentes sur la langue et le palais. Pas d'antécédent particulier, pas de VIH connu.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Le facteur déclenchant est <strong>l'antibiothérapie à large spectre</strong> qui a modifié le microbiote oral, permettant la prolifération de <em>Candida albicans</em> (commensal normal). Il s'agit d'une <strong>candidose oropharyngée pseudomembraneuse</strong>. Traitement local : <strong>nystatine ou amphotéricine B en suspension buccale pendant 10-15 jours</strong>, associé à des bains de bouche au bicarbonate. Il faut éliminer un diabète sous-jacent et une immunodépression non connue si récidive.
+      </div>
+    </div>
+
+    <div class="cas-card">
+      <h4>CAS 2 — Mycose opportuniste chez VIH</h4>
+      <p class="scenario">Mme Eline, 34 ans, séropositive VIH non traitée, CD4 = 85/mm³. Elle consulte pour céphalées progressives depuis 3 semaines, fièvre à 38,5°C, légère raideur de nuque. La PL montre une méningite lymphocytaire avec protéinorachie à 0,8 g/L. L'encre de Chine sur le LCR montre des levures entourées d'un large halo.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Il s'agit d'une <strong>cryptococcose neuroméningée</strong> à <em>Cryptococcus neoformans</em> (levure encapsulée). Typique chez VIH avec CD4 &lt; 100. La capsule est visualisée par l'encre de Chine comme un halo clair. Traitement en 3 phases : <strong>Phase d'induction :</strong> Amphotéricine B 0,7-1 mg/kg/j + 5-fluorocytosine 100-150 mg/kg/j IV × 2 semaines minimum. <strong>Consolidation :</strong> Fluconazole 400-800 mg/j × 6 semaines. <strong>Maintenance :</strong> Fluconazole 200 mg/j × 6-12 mois (puis arrêt si CD4 > 100 sous ARV). Initier les ARV après stabilisation de la cryptococcose (risque d'IRIS).
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAP 1 : CHAMPIGNONS DIMORPHIQUES -->
+  <div class="chapter-section">
+    <div class="chapter-title"><span class="num">1</span> Champignons Dimorphiques</div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">📌</span><span class="rubrique-label">Définition</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Champignons capables de se présenter sous <strong>deux formes morphologiques</strong> selon la température :</p>
+        <ul>
+          <li><span class="tag">37°C / in vivo</span> → <strong>Forme levure</strong> (forme parasitaire pathogène)</li>
+          <li><span class="tag">25°C / sol</span> → <strong>Forme mycélienne</strong> (forme saprophytique, contagieuse pour les labo)</li>
+        </ul>
+        <p>3 pathogènes principaux : Histoplasma capsulatum, Coccidioides immitis/posadasii, Blastomyces dermatitidis + Paracoccidioides brasiliensis.</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🌍</span><span class="rubrique-label">Épidémiologie par espèce</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <table class="data-table">
+          <tr><th>Champignon</th><th>Répartition</th><th>Réservoir</th></tr>
+          <tr><td>H. capsulatum var. capsulatum</td><td>Amériques (centre/est USA), Afrique intertropicale, Asie, Océanie</td><td>Sol enrichi en fientes pigeons/chauves-souris, grottes, élevages</td></tr>
+          <tr><td>H. capsulatum var. duboisii</td><td>Afrique sub-sahélienne + Madagascar</td><td>Biotope mal connu — sol tellurique</td></tr>
+          <tr><td>Coccidioides spp.</td><td>Régions désertiques (USA, Amérique latine)</td><td>Sol aride alcalin, galeries de rongeurs</td></tr>
+          <tr><td>Blastomyces dermatitidis</td><td>Centre et sud USA, Canada, sporadique Afrique</td><td>Sol humide acide</td></tr>
+          <tr><td>Paracoccidioides brasiliensis</td><td>Amérique latine (Brésil, Colombie, Venezuela, Argentine)</td><td>Sol — populations rurales/forestières</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔄</span><span class="rubrique-label">Transmission</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>Voie principale :</strong> inhalation de conidies/arthroconidies libérées dans les poussières.</p>
+        <p>Pas de transmission interhumaine directe pour aucun des champignons dimorphiques.</p>
+        <p>Sujets à risque : PVVIH (CD4&lt;150), greffés, chimiothérapie, agriculteurs, spéléologues, travailleurs du bâtiment en zone endémique.</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🤒</span><span class="rubrique-label">Formes Cliniques</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>Histoplasmose américaine :</strong></p>
+        <ul>
+          <li>90% asymptomatique → nodules/adénopathies calcifiés radio</li>
+          <li>Pulmonaire aiguë : syndrome pseudo-grippal (fièvre, toux, dyspnée) après 5-10j d'incubation</li>
+          <li>Cavitaire chronique : ressemble à tuberculose (toux, hémoptysies, sueurs nocturnes)</li>
+          <li>Disséminée (VIH++) : atteintes multi-viscérales + lésions buccales ulcérées → pronostic grave</li>
+        </ul>
+        <p><strong>Histoplasmose africaine :</strong></p>
+        <ul>
+          <li>Cutanée (papules/nodules), sous-cutanée (abcès), osseuse (lyses), viscérale</li>
+          <li>Moins influencée par le VIH</li>
+        </ul>
+        <p><strong>Coccidioïdomycose primaire :</strong> 60% asymptomatique. Si symptomatique : pseudo-grippe + "rhumatisme du désert" (érythème polymorphe + arthralgies).</p>
+        <p><strong>Coccidioïdomycose disséminée :</strong> SNC (méningite), cutanée (granulomes), osseuse, pulmonaire milliaire — chez immunodéprimés.</p>
+        <p><strong>Blastomycose nord-américaine :</strong> pulmonaire (pneumopathie) + cutanée (lésions verruqueuses centrifuges) + osseuse + génito-urinaire (prostatite).</p>
+        <p><strong>Paracoccidioïdomycose :</strong> oro-cutanéo-pulmonaire chez adultes masculins de 30+ ans ; forme aiguë/subaiguë chez jeunes immunodéprimés.</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔬</span><span class="rubrique-label">Diagnostic</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>Prélèvements :</strong> LBA, expectorations, sang, biopsies d'organes, moelle, LCR.</p>
+        <p><strong>Examen direct (MGG, PAS) :</strong></p>
+        <ul>
+          <li>H. capsulatum : levure 2-4µm <strong>intracellulaire</strong> (macrophages) avec halo clair (pseudocapsule) + bourgeon polaire</li>
+          <li>H. duboisii : grandes levures 5-20µm en "citron" ou "8"</li>
+          <li>Coccidioides : sphérules 10-80µm avec endospores 3-5µm</li>
+          <li>Blastomyces : levure 8-15µm avec <strong>bourgeon à large base d'implantation</strong></li>
+          <li>Paracoccidioides : levure 10-60µm <strong>multibourgeonnante</strong> (aspect en "roue de bateau")</li>
+        </ul>
+        <p><strong>Culture :</strong> Sabouraud 25-30°C (forme filamenteuse) + gélose sang 37°C (forme levure). Très dangereuse — laboratoire P3.</p>
+        <p><strong>Antigènes urinaires :</strong> H. capsulatum (sensibilité >90% chez PVVIH fébrile), utilisable comme test rapide.</p>
+        <p><strong>PCR :</strong> sensibilité/spécificité ~100%.</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">💊</span><span class="rubrique-label">Traitement</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <table class="data-table">
+          <tr><th>Maladie</th><th>Forme légère</th><th>Forme sévère/VIH</th></tr>
+          <tr><td>Histoplasmose américaine</td><td>Itraconazole 200-400mg/j × plusieurs mois</td><td>Ambisome 3mg/kg/j ou AmB 0,7-1mg/kg/j → relais Itraconazole</td></tr>
+          <tr><td>Histoplasmose africaine</td><td>Itraconazole 200-400mg/j × 1 an</td><td>AmB 0,7-1mg/kg/j → Itraconazole</td></tr>
+          <tr><td>Coccidioïdomycose</td><td>Itraconazole ou fluconazole</td><td>AmB 1mg/kg/j → azolé longue durée</td></tr>
+          <tr><td>Blastomycose</td><td>Itraconazole 200-400mg/j × 6 mois</td><td>AmB 0,7-1mg/kg/j × 15j → Itraconazole</td></tr>
+          <tr><td>Paracoccidioïdomycose</td><td>Itraconazole 100-200mg/j × 6 mois</td><td>AmB → sulfamides + surveillance 3-5 ans</td></tr>
+        </table>
+        <p><strong>Prophylaxie secondaire chez VIH :</strong> Itraconazole 200-400mg/j si CD4 &lt;150 (histoplasme), arrêt si CD4 > 150 sous ARV.</p>
+        <div class="highlight-box warn">⚠️ Surveiller pendant 3-5 ans après traitement à cause des rechutes fréquentes (blastomycose, paracoccidioïdomycose).</div>
+      </div>
+    </div>
+
+    <hr class="sep">
+    <h3 style="color:var(--accent3);font-size:16px;margin-bottom:16px;">🏥 Cas Cliniques Didactiques — Champignons Dimorphiques</h3>
+
+    <div class="cas-card">
+      <h4>CAS 1 — Histoplasmose disséminée</h4>
+      <p class="scenario">Pierre, 29 ans, PVVIH (CD4 = 42/mm³), revient d'une visite dans des grottes au Honduras. Il présente fièvre prolongée, toux, douleurs abdominales, hépatomégalie et lésions ulcéreuses de la langue. La radio thoracique montre des infiltrats diffus. L'antigène urinaire Histoplasma revient positif.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Histoplasmose américaine disséminée (H. capsulatum var. capsulatum) chez un patient très immunodéprimé (CD4&lt;50). Exposition par inhalation de conidies dans les grottes habitées par des chauves-souris. <br><strong>Traitement d'attaque :</strong> Ambisome 3mg/kg/j ou AmB 0,7-1mg/kg/j jusqu'à amélioration clinique. <strong>Relais :</strong> Itraconazole 200-600mg/j pendant plusieurs mois. Initier ARV après stabilisation (risque IRIS). Prophylaxie secondaire à maintenir tant que CD4 &lt;150.
+      </div>
+    </div>
+
+    <div class="cas-card">
+      <h4>CAS 2 — Coccidioïdomycose du voyageur</h4>
+      <p class="scenario">Sophie, 38 ans, immunocompétente, géologue, travaille depuis 6 semaines dans le désert de l'Arizona. Elle consulte pour fièvre, toux, douleur thoracique et un érythème polymorphe des membres avec arthralgies. IDR à la coccidioïdine : positive.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Coccidioïdomycose primaire symptomatique, exposition par inhalation des arthroconidies dans les poussières du désert. L'érythème polymorphe + arthralgies = "rhumatisme du désert" ou "fièvre des vallées", témoignant d'une réaction d'hypersensibilité. Chez un sujet immunocompétent, l'évolution est généralement favorable spontanément. <strong>Traitement de courte durée :</strong> Itraconazole ou fluconazole si formes symptomatiques. Surveiller l'évolution : si dissémination → AmB.
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAP 2 : PNEUMOCYSTOSE -->
+  <div class="chapter-section">
+    <div class="chapter-title"><span class="num">2</span> Pneumocystose</div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">📌</span><span class="rubrique-label">Définition</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Infection opportuniste pulmonaire due à <strong>Pneumocystis jiroveci</strong> (ex-P. carinii — reclassé dans les Ascomycètes).</p>
+        <p>Très répandu (70% de la population générale), mais devient pathogène lorsque les <strong>lymphocytes T CD4+ &lt; 200/mm³</strong>.</p>
+        <p>Champignon à réservoir <strong>strictement humain</strong> — transmission interhumaine par voie aérienne.</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🌍</span><span class="rubrique-label">Épidémiologie</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Cosmopolite. Population concernée :</p>
+        <ul>
+          <li>VIH/SIDA (principale cause de décès chez les sidéens avant les trithérapies)</li>
+          <li>Greffés sous immunosuppresseurs</li>
+          <li>Chimio-thérapies (leucémie lymphoblastique aiguë)</li>
+          <li>Enfants prématurés et dénutris</li>
+          <li>Syndrome d'hypersécrétion d'IgM</li>
+        </ul>
+        <p>Depuis les trithérapies : incidence très diminuée dans les pays développés. Reste majeure dans les PVD (2e infection opportuniste fatale en Afrique/Asie).</p>
+        <p>Létalité 1er épisode : 5-30%. En France : 60% des patients VIH en feront un épisode.</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔄</span><span class="rubrique-label">Cycle évolutif & Transmission</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Cycle incomplet élucidé — stades extracellulaires dans l'alvéole pulmonaire :</p>
+        <ul>
+          <li><strong>Trophozoïte</strong> → petit</li>
+          <li><strong>Kyste (asque)</strong> rempli de 8 <strong>ascospores</strong></li>
+          <li><strong>Pseudokyste</strong></li>
+        </ul>
+        <p>Les ascospores libérées donnent des petites formes trophiques puis plus grandes, qui par conjugaison donnent de nouveaux asques.</p>
+        <p><strong>Transmission :</strong> voie aérienne interhumaine — tant par les malades que par les sujets colonisés asymptomatiques. Aucun réservoir environnemental connu.</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🤒</span><span class="rubrique-label">Formes Cliniques</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>Présentation classique :</strong> toux sèche d'intensité modérée, fièvre, tachypnée, détresse respiratoire.</p>
+        <p><strong>3 formes radiologiques :</strong></p>
+        <ul>
+          <li>Pneumonie lobaire/segmentaire</li>
+          <li>Bronchopneumonie lobulaire multifocale</li>
+          <li><strong>Pneumonie interstitielle diffuse</strong> (la plus typique chez VIH — plages de verre dépoli bilatérales)</li>
+        </ul>
+        <p><strong>Physiopathologie :</strong> Chez le sujet sain, les macrophages + cytokines + LT CD4 détruisent P. jiroveci. Chez l'immunodéprimé, les lésions de l'épithélium alvéolaire → cloisons épaissies → pneumopathie interstitielle → hypoxémie → insuffisance respiratoire.</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔬</span><span class="rubrique-label">Diagnostic</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <ul>
+          <li><strong>Gaz du sang :</strong> hypoxémie (gradient alvéolo-artériel augmenté)</li>
+          <li><strong>Radio thoracique :</strong> syndrome interstitiel bilatéral</li>
+          <li><strong>LBA (Lavage Broncho-Alvéolaire) :</strong> examen direct + colorations spéciales</li>
+          <li><strong>Colorations :</strong> GMS (Gomori), Blankophor, immunofluorescence directe — mettent en évidence les kystes</li>
+          <li><strong>PCR :</strong> très sensible, sur LBA ou expectoration induite</li>
+          <li><strong>Biopsie pulmonaire :</strong> si LBA non contributif</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">💊</span><span class="rubrique-label">Traitement & Prophylaxie</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>Traitement curatif (1er choix) :</strong> <span class="tag">Cotrimoxazole (TMP-SMX)</span> oral ou IV selon sévérité.</p>
+        <p><strong>Alternatives :</strong> pentamidine, atovaquone, dapsone.</p>
+        <p><strong>Corticothérapie associée</strong> si hypoxémie ou forme modérée à sévère (réduit la mortalité).</p>
+        <hr style="border-color:var(--border);margin:12px 0;">
+        <p><strong>Prophylaxie primaire :</strong> dès CD4 &lt; 200/mm³ ou &lt; 15% des lymphocytes → <span class="tag green">Cotrimoxazole 1cp/j (ou 3×/semaine fort)</span></p>
+        <p><strong>Alternatives :</strong> pentamidine en aérosol 4mg/kg/semaine, dapsone 100mg/j, atovaquone 1500mg/j.</p>
+        <p><strong>Prophylaxie secondaire :</strong> identique. Arrêt possible si CD4 > 200/mm³ de façon durable (3 mois) + charge virale &lt; 1000 copies/mL.</p>
+        <p>Prophylaxie systématique chez les greffés d'organe solide et allogreffes CSH pendant 6 mois post-transplantation.</p>
+      </div>
+    </div>
+
+    <hr class="sep">
+    <h3 style="color:var(--accent3);font-size:16px;margin-bottom:16px;">🏥 Cas Cliniques Didactiques — Pneumocystose</h3>
+    <div class="cas-card">
+      <h4>CAS 1 — Pneumocystose inaugurale du SIDA</h4>
+      <p class="scenario">Marc, 42 ans, sans antécédent connu, consulte pour toux sèche depuis 3 semaines, fièvre à 38°C et dyspnée d'effort progressive. La radio thoracique montre un syndrome interstitiel bilatéral diffus. Gaz du sang : PaO2 = 62 mmHg. Bilan : VIH+ avec CD4 = 120/mm³ découvert ce jour.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Pneumocystose révélatrice du SIDA (CD4 &lt;200). LBA urgent + colorations (GMS, immunofluorescence) + PCR. <strong>Traitement :</strong> Cotrimoxazole IV forte dose + corticothérapie (hypoxémie). Initier ARV après 2-4 semaines de traitement anti-Pneumocystis. Mettre en place prophylaxie secondaire par Cotrimoxazole. Bilan des autres infections opportunistes.
+      </div>
+    </div>
+    <div class="cas-card">
+      <h4>CAS 2 — Pneumocystose chez greffé rénal</h4>
+      <p class="scenario">Annie, 56 ans, greffée rénale depuis 8 mois, sous tacrolimus + prednisone. Elle développe une toux et une fièvre. La radio montre des opacités en verre dépoli bilatérales. CD4 = 185/mm³ (non VIH). Le LBA revient positif à Pneumocystis jiroveci à la PCR.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Pneumocystose sur immunosuppression post-transplantation. Le tacrolimus + prednisone constituent un terrain immunodéprimé non VIH. La prophylaxie par cotrimoxazole aurait dû être maintenue 6 mois post-greffe. Traitement : Cotrimoxazole. Réduire si possible les immunosuppresseurs. La prophylaxie post-traitement doit être maintenue tant que le patient reste sous immunosuppression.
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAP 3 : MALASSEZIOSES -->
+  <div class="chapter-section">
+    <div class="chapter-title"><span class="num">3</span> Malassezioses</div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">📌</span><span class="rubrique-label">Définition</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Mycoses superficielles dues à <strong>Malassezia furfur</strong> (et espèces apparentées : M. globosa, M. restricta), <strong>épisaprophyte</strong> cutané présent chez ~100% des adultes.</p>
+        <p>Les pathologies surviennent par prolifération anormale chez des sujets prédisposés : pityriasis versicolor, pityriasis capitis (pellicules), dermatite séborrhéique, folliculite à Malassezia, et malasseziose systémique (nourrissons sous nutrition parentérale).</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🌍</span><span class="rubrique-label">Épidémiologie</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Cosmopolite. Plus fréquent dans les pays tropicaux chauds et humides. Sujets à risque :</p>
+        <ul>
+          <li>Adolescents et adultes jeunes (séborrhée pubertaire)</li>
+          <li>Peau grasse, transpiration excessive</li>
+          <li>Grossesse, contraceptifs oraux</li>
+          <li>Corticothérapie topique prolongée</li>
+          <li>Immunodépression (dermatite séborrhéique sévère typique du VIH)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🤒</span><span class="rubrique-label">Formes Cliniques</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>1. Pityriasis versicolor :</strong></p>
+        <ul>
+          <li>Macules rondes, bien délimitées, couleur variable (hypo- ou hyperpigmentées) ou rosées</li>
+          <li>Localisation : tronc, épaules, membres supérieurs (zones séborrhéiques)</li>
+          <li>Squames furfuracées (petites écailles) au grattage</li>
+          <li>Asymptomatique ou légèrement prurigineuse</li>
+          <li>Exacerbation en été (bronzage → hypopigmentation visible)</li>
+        </ul>
+        <p><strong>2. Pityriasis capitis (pellicules) :</strong></p>
+        <ul>
+          <li>Squames blanches/grises du cuir chevelu, prurit</li>
+          <li>Forme légère de dermatite séborrhéique du scalp</li>
+        </ul>
+        <p><strong>3. Dermatite séborrhéique :</strong></p>
+        <ul>
+          <li>Plaques érythémateuses squameuses sur zones séborrhéiques (sourcils, plis nasogéniens, cuir chevelu)</li>
+          <li>Signe d'alerte pour infection VIH si sévère</li>
+        </ul>
+        <p><strong>4. Folliculite à Malassezia :</strong></p>
+        <ul>
+          <li>Papulo-pustules folliculaires du dos et thorax → chez sujets sous antibiotiques larges spectre</li>
+        </ul>
+        <p><strong>5. Malasseziose systémique (rare) :</strong></p>
+        <ul>
+          <li>Nourrissons prématurés sous nutrition parentérale lipidique + cathéter central</li>
+          <li>Fièvre, détresse respiratoire, sepsis → culture sur milieu lipido-supplémenté</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔬</span><span class="rubrique-label">Diagnostic</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <ul>
+          <li><strong>Examen direct :</strong> squames au KOH — aspect caractéristique <span class="tag">"spaghetti et boulettes"</span> = filaments courts + spores rondes groupées</li>
+          <li><strong>Lampe de Wood :</strong> fluorescence dorée/jaune des lésions</li>
+          <li><strong>Culture :</strong> milieu de Sabouraud supplémenté en lipides (huile d'olive) nécessaire — rarement indispensable</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">💊</span><span class="rubrique-label">Traitement</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>Pityriasis versicolor :</strong></p>
+        <ul>
+          <li>Topique : <span class="tag green">Kétoconazole 2% shampooing/crème</span>, ciclopiroxolamine, sulfure de sélénium</li>
+          <li>Systémique (formes étendues ou récidivantes) : Itraconazole 200mg/j × 7j ou Fluconazole 400mg en dose unique</li>
+          <li>⚠️ Dépigmentation peut persister des semaines à mois après guérison mycologique — informer le patient</li>
+        </ul>
+        <p><strong>Dermatite séborrhéique :</strong> Kétoconazole topique + émollients. Maintien à long terme souvent nécessaire.</p>
+        <p><strong>Récidives fréquentes :</strong> prophylaxie mensuelle par kétoconazole shampooing en été.</p>
+      </div>
+    </div>
+
+    <hr class="sep">
+    <h3 style="color:var(--accent3);font-size:16px;margin-bottom:16px;">🏥 Cas Cliniques Didactiques — Malassezioses</h3>
+    <div class="cas-card">
+      <h4>CAS 1 — Pityriasis versicolor estival</h4>
+      <p class="scenario">Kevin, 22 ans, en bonne santé, consulte après un séjour à la plage. Il présente des taches dépigmentées (blanches) sur le tronc et les épaules alors que le reste du corps est bronzé. Légèrement squameuses au grattage, non prurigineuses.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Pityriasis versicolor typique (hypopigmenté). L'hypopigmentation est due à la production d'acide azélaïque par M. furfur qui inhibe la mélanogenèse. Le bronzage rend les zones malades plus visibles. Diagnostic : examen direct KOH → aspect "spaghetti et boulettes". Traitement : kétoconazole 2% shampooing appliqué sur le tronc 15-20 min puis rincer, quotidiennement × 10j. Informer que la dépigmentation peut persister 2-3 mois même après guérison mycologique.
+      </div>
+    </div>
+    <div class="cas-card">
+      <h4>CAS 2 — Dermatite séborrhéique sévère</h4>
+      <p class="scenario">Alexia, 31 ans, consulte pour plaques érythémateuses squameuses et prurigineuses des sourcils, plis nasogéniens, cuir chevelu et sternum depuis 6 mois, résistant aux soins habituels. À l'examen : état général conservé, ADP cervicales.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Dermatite séborrhéique sévère doit faire rechercher une infection VIH (signe révélateur fréquent). Sérologie VIH urgente. Traitement immédiat : kétoconazole 2% crème sur les zones atteintes + shampooing cuir chevelu. Si VIH confirmé, mise sous ARV améliorera la dermatite séborrhéique. Le maintien du traitement antifongique topique à long terme est souvent nécessaire.
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAP 4 : ASPERGILLOSES -->
+  <div class="chapter-section">
+    <div class="chapter-title"><span class="num">4</span> Aspergilloses</div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">📌</span><span class="rubrique-label">Définition & Agents pathogènes</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Mycoses, le plus souvent pulmonaires, provoquées par des champignons filamenteux du genre <strong>Aspergillus</strong> (famille Aspergillaceae, classe Ascomycètes). Affections opportunistes, parfois mortelles.</p>
+        <p><strong>Aspergillus fumigatus</strong> = espèce la plus fréquente. Filaments cloisonnés hyalins. Spores 2-3µm (atteignent alvéoles).</p>
+        <p>Autres espèces : A. flavus, A. niger (otomycose), A. terreus (résistant à l'AmB).</p>
+        <p>Autres moisissures opportunistes : Fusarium, Mucorales (Rhizopus, Mucor), Scedosporium, Talaromyces marneffei (Asie du Sud-Est).</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🌍</span><span class="rubrique-label">Épidémiologie & Réservoir</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Cosmopolite, prédominance en régions humides. Moisissures omniprésentes dans l'environnement :</p>
+        <ul>
+          <li>Sol, plantes en décomposition, air, surfaces hospitalières</li>
+          <li>Alimentation (épices, tisanes), systèmes de ventilation (travaux hospitaliers)</li>
+        </ul>
+        <p>Sujets à risque :</p>
+        <ul>
+          <li>Neutropéniques profonds (hémopathies, greffe CSH)</li>
+          <li>Corticothérapie prolongée</li>
+          <li>Transplantation d'organe</li>
+          <li>BPCO, cavernes tuberculeuses (aspergillome)</li>
+          <li>Grands brûlés (aspergillose cutanée)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔄</span><span class="rubrique-label">Transmission</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>Inhalation de conidies (spores)</strong> → atteinte pulmonaire préférentielle.</p>
+        <p>Contamination cutanée directe sur plaies/brûlures ou site opératoire.</p>
+        <p><strong>PAS de transmission interhumaine.</strong></p>
+        <p>Risque accru lors de travaux hospitaliers (remise en suspension des spores).</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🤒</span><span class="rubrique-label">Formes Cliniques</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>A. ASPERGILLOME</strong> (forme cavitaire)</p>
+        <ul>
+          <li>Développement dans une <strong>cavité préexistante</strong> (caverne TBC, kyste, bronchectasies)</li>
+          <li>Clinique : <strong>hémoptysies récidivantes</strong> (60%), toux, fièvre, amaigrissement</li>
+          <li>Radio : <strong>image en grelot</strong> = opacité arrondie dans une cavité + croissant aérique supérieur</li>
+          <li>Évolution variable : stabilisation, complications hémorragiques</li>
+        </ul>
+        <p><strong>B. ASPERGILLOSE PULMONAIRE INVASIVE (API)</strong></p>
+        <ul>
+          <li>Chez immunodéprimés profonds (neutropéniques, greffes CSH)</li>
+          <li>Fièvre résistante aux antibiotiques + tableau infectieux grave</li>
+          <li>Dissémination : cerveau, rein, foie, cœur</li>
+          <li>Mortalité très élevée — urgence thérapeutique</li>
+        </ul>
+        <p><strong>C. ASPERGILLOSES ALLERGIQUES</strong></p>
+        <ul>
+          <li>Alvéolite allergique extrinsèque (non atopique, exposition massive)</li>
+          <li>Asthme aspergillaire (atopique)</li>
+          <li><strong>ABPA</strong> (Aspergillose bronchopulmonaire allergique) = Maladie de Hinson : asthme + éosinophilie + infiltrats + IgE élevées</li>
+        </ul>
+        <p><strong>D. FORMES EXTRA-PULMONAIRES</strong></p>
+        <ul>
+          <li><strong>Otomycose</strong> à A. niger : bouchon mycélien dans le CAE, prurit, surdité</li>
+          <li>Sinusite aspergillaire (maxillaire) chronique unilatérale</li>
+          <li>Kératite, onychomycose (rare)</li>
+          <li>Cutanée : brûlés étendus</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔬</span><span class="rubrique-label">Diagnostic</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <ul>
+          <li><strong>Examen direct :</strong> filaments mycéliens 2-4µm, ramifiés, têtes aspergillaires caractéristiques</li>
+          <li><strong>Culture (3-5 jours) :</strong> colonies poudreuses/veloutées, vert-gris (fumigatus) — identifie l'espèce</li>
+          <li><strong>Histologie :</strong> biopsie — filaments envahissants</li>
+          <li><strong>Sérologie :</strong> anticorps précipitants (bonne valeur pour aspergillome et formes allergiques ; mauvaise chez ID)</li>
+          <li><strong>Antigènes circulants :</strong> <span class="tag">Galactomannane sérique</span> (ELISA) — excellent pour diagnostic précoce d'API chez neutropéniques ; <strong>2 prélèvements positifs</strong> = fortement évocateur</li>
+          <li><strong>PCR :</strong> sur sang, LBA — complémentaire</li>
+          <li><strong>Scanner thoracique :</strong> signe du halo (précoce), image en grelot (aspergillome)</li>
+        </ul>
+        <div class="highlight-box warn">⚠️ Isolement d'Aspergillus dans une cavité naturelle ne suffit PAS au diagnostic (champignon saprophyte ubiquitaire). Il faut des arguments cliniques + biologiques + radiologiques convergents.</div>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">💊</span><span class="rubrique-label">Traitement & Prévention</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <table class="data-table">
+          <tr><th>Forme</th><th>Traitement</th></tr>
+          <tr><td>Aspergillome</td><td>Chirurgie (1er choix) ou Itraconazole 400mg/j × plusieurs mois</td></tr>
+          <tr><td>API</td><td><strong>Voriconazole IV</strong> (1er choix) ou AmB IV forte dose → relais Itraconazole</td></tr>
+          <tr><td>ABPA</td><td>Corticoïdes + Itraconazole (diminue la dose de corticoïdes)</td></tr>
+          <tr><td>Otomycose</td><td>Nettoyage mécanique + antifongiques locaux (azolés)</td></tr>
+        </table>
+        <p><strong>Prévention :</strong></p>
+        <ul>
+          <li>Services à haut risque : filtration HEPA, bionettoyage, pas de plantes/fruits</li>
+          <li>Port de masque à l'extérieur des unités protégées</li>
+          <li>Protection lors de travaux intra-hospitaliers</li>
+          <li>Prophylaxie antifongique (voriconazole ou posaconazole) chez greffes CSH ou leucémies aiguës</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="sep">
+    <h3 style="color:var(--accent3);font-size:16px;margin-bottom:16px;">🏥 Cas Cliniques Didactiques — Aspergilloses</h3>
+    <div class="cas-card">
+      <h4>CAS 1 — Aspergillome sur séquelle TBC</h4>
+      <p class="scenario">Robert, 68 ans, tuberculose pulmonaire traitée il y a 15 ans avec caverne séquellaire connue. Consultation pour hémoptysies récidivantes depuis 2 mois, toux et fièvre légère. Radio thoracique : image en grelot à l'apex gauche. Sérologie aspergillaire : précipitines positives ++.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Aspergillome pulmonaire développé dans la caverne tuberculeuse séquellaire. La "truffe aspergillaire" est constituée de filaments d'Aspergillus dans la cavité. L'image en grelot (opacité arrondie + croissant aérique) est caractéristique. Traitement de choix : <strong>chirurgie</strong> (exérèse de la cavité + aspergillome) si état fonctionnel respiratoire acceptable. Si chirurgie contre-indiquée : Itraconazole 400mg/j prolongé. Artério-embolisation bronchique si hémoptysies abondantes en urgence.
+      </div>
+    </div>
+    <div class="cas-card">
+      <h4>CAS 2 — Aspergillose invasive post-greffe</h4>
+      <p class="scenario">Lucie, 45 ans, leucémie myéloïde aiguë, post-greffe de CSH, J+20, sous immunosuppresseurs. Fièvre à 39°C résistante aux antibiotiques, toux et douleur thoracique. Scanner : image en halo périlésionnel. Galactomannane sérique : positif à 2 reprises (index > 0,5).</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Aspergillose pulmonaire invasive (API). Le signe du halo au scanner + galactomannane positif × 2 = diagnostic très probable. <strong>Urgence thérapeutique.</strong> Traitement : <strong>Voriconazole IV</strong> (traitement de 1ère ligne recommandé) dose de charge 6mg/kg/12h J1 puis 4mg/kg/12h. Alternative : AmB liposomale. Réduire l'immunosuppression si possible. Surveillance étroite : mortalité très élevée chez neutropénique profond.
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAP 5 : CRYPTOCOCCOSE -->
+  <div class="chapter-section">
+    <div class="chapter-title"><span class="num">5</span> Cryptococcose</div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">📌</span><span class="rubrique-label">Définition</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Infection grave provoquée par <strong>Cryptococcus neoformans</strong>, <strong>levure encapsulée</strong> à bourgeonnement polaire.</p>
+        <p>Infection opportuniste des immunodéprimés (VIH++, CD4 &lt; 100). Forme principale : <strong>méningo-encéphalite</strong>, fatale sans traitement.</p>
+        <p>Découverte en 1894 (Sanfelice, jus de poire).</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🌍</span><span class="rubrique-label">Épidémiologie</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Cosmopolite. 2-20% des PVVIH selon les régions. Réservoir : <strong>fientes de pigeons</strong> (endo-exosaprophyte — aussi dans jabot des pigeons, substances sucrées).</p>
+        <p>Autres facteurs favorisants : corticothérapie longue durée, hémopathies lymphoïdes, transplantations d'organe, sarcoïdose, IRC, cirrhose.</p>
+        <p>Dans les PVD (Afrique sub-saharienne, Asie SE) : 2ème infection opportuniste fatale chez les sidéens.</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔄</span><span class="rubrique-label">Transmission</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>Inhalation de spores</strong> (basidiospores) présentes dans l'environnement contaminé par les fientes de pigeons.</p>
+        <p>Inoculation cutanée traumatique directe (rare).</p>
+        <p>Contact étroit avec pigeons déconseillé aux immunodéprimés.</p>
+        <p>PAS de transmission interhumaine directe.</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🤒</span><span class="rubrique-label">Formes Cliniques</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>A. Méningo-encéphalite cryptococcique</strong> (forme principale, >60% des cas, 80% chez VIH) :</p>
+        <ul>
+          <li>Céphalées + fièvre modérée (>70% des cas)</li>
+          <li>Vertiges, irritabilité, troubles cognitifs</li>
+          <li>Crises convulsives, obnubilation, coma</li>
+          <li>Paralysie nerf crânien, déficit moteur (20-50%)</li>
+          <li>Sans traitement : mort inéluctable. Avec traitement : mortalité ~20%</li>
+        </ul>
+        <p><strong>B. Localisation pulmonaire :</strong> pneumopathie non spécifique (toux, douleur thoracique, fièvre modérée)</p>
+        <p><strong>C. Lésions cutanées :</strong> papules indolores, ulcérées — dissémination hématogène</p>
+        <p><strong>D. Lésions osseuses :</strong> os plats et vertèbres — abcès ossifluents</p>
+        <div class="highlight-box danger">⚠️ Pronostic grave si : évolution rapide des symptômes + hypertension intracrânienne (HTIC).</div>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔬</span><span class="rubrique-label">Diagnostic</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <ul>
+          <li><strong>LCR (PL) :</strong> méningite lymphocytaire + protéinorachie élevée + glucorachie basse</li>
+          <li><strong>Encre de Chine sur LCR :</strong> mise en évidence des levures encapsulées (halo clair = capsule)</li>
+          <li><strong>CrAg sérique/LCR :</strong> antigène cryptococcique (sensibilité >95%) — test de référence + suivi thérapeutique</li>
+          <li><strong>Culture :</strong> Sabouraud — colonies crémeuses en 3-7 jours</li>
+          <li><strong>Histologie :</strong> levures entourées d'un halo clair dans les tissus, aspect mucoïde</li>
+          <li><strong>Scanner cérébral :</strong> avant PL si suspicion d'HTIC</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">💊</span><span class="rubrique-label">Traitement — 3 phases</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <table class="data-table">
+          <tr><th>Phase</th><th>Traitement</th><th>Durée</th></tr>
+          <tr><td><strong>Induction</strong></td><td>AmB 0,7-1mg/kg/j IV + 5-fluorocytosine 100-150mg/kg/j IV (ou AmB liposomale 3-5mg/kg/j)</td><td>≥ 2 semaines</td></tr>
+          <tr><td><strong>Consolidation</strong></td><td>Fluconazole 400-800mg/j per os</td><td>≥ 6 semaines</td></tr>
+          <tr><td><strong>Maintenance</strong></td><td>Fluconazole 200mg/j (prophylaxie secondaire)</td><td>6 mois à 1 an (ou tant qu'immunodéprimé)</td></tr>
+        </table>
+        <p><strong>HTIC (&gt;25 cm H₂O) :</strong> ponctions lombaires évacuatrices répétées.</p>
+        <p>Cryptococcose pulmonaire/cutanée localisée : fluconazole d'emblée.</p>
+        <p>Séquelles possibles après guérison : surdité, cécité, déficits neurologiques.</p>
+        <p>IRIS possible à l'initiation des ARV → surveillance étroite.</p>
+      </div>
+    </div>
+
+    <hr class="sep">
+    <h3 style="color:var(--accent3);font-size:16px;margin-bottom:16px;">🏥 Cas Cliniques Didactiques — Cryptococcose</h3>
+    <div class="cas-card">
+      <h4>CAS 1 — Cryptococcose méningée révélatrice</h4>
+      <p class="scenario">Jean-Claude, 38 ans, céphalées progressives sur 3 semaines, fièvre, confusion légère. PL : méningite lymphocytaire, Pandy+. Encre de Chine : levures encapsulées. CD4 = 62/mm³. Sérologie VIH positive non connue du patient.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Cryptococcose neuroméningée révélatrice du SIDA. CrAg sérique positif confirme. <strong>Traitement d'induction :</strong> AmB 0,7mg/kg/j IV + 5-FC 100mg/kg/j × 2 semaines minimum. Mesurer la PL : si pression &gt;25 cm H₂O → PL évacuatrices quotidiennes jusqu'à normalisation. <strong>Consolidation :</strong> fluconazole 400-800mg/j × 6 semaines. <strong>Maintenance :</strong> fluconazole 200mg/j. Initier ARV après 2-4 semaines de traitement antifongique (risque IRIS). Surveiller CrAg mensuel.
+      </div>
+    </div>
+    <div class="cas-card">
+      <h4>CAS 2 — Cryptococcose sur sarcoïdose</h4>
+      <p class="scenario">Michèle, 54 ans, sarcoïdose systémique sous prednisone 30mg/j depuis 18 mois. Développe un tableau de méningite subaiguë. PL : lymphocytose, CrAg LCR positif 1/512.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Cryptococcose neuroméningée sur corticothérapie au long cours (sarcoïdose). Même prise en charge que pour le VIH : induction AmB + 5-FC, puis consolidation et maintenance fluconazole. Réduire la corticothérapie à la dose minimale efficace pour la sarcoïdose. Surveiller les signes d'HTIC. Suivi du CrAg pour évaluer la réponse.
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAP 6 : CANDIDOSES -->
+  <div class="chapter-section">
+    <div class="chapter-title"><span class="num">6</span> Candidoses</div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">📌</span><span class="rubrique-label">Définition</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Infections dues aux levures du genre <strong>Candida</strong> (~200 espèces), micro-organismes <strong>endogènes ou exogènes</strong>, dont le pouvoir pathogène ne s'exprime qu'en présence de <strong>facteurs favorisants</strong>.</p>
+        <p><strong>C. albicans</strong> = espèce principale (commensal des muqueuses digestives et vaginales). C. glabrata, C. parapsilosis (mains, cathéter), C. krusei (résistant au fluconazole).</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🤒</span><span class="rubrique-label">Formes Cliniques</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>A. CANDIDOSES OROPHARYNGÉES (Muguet)</strong></p>
+        <ul>
+          <li>Pseudomembraneuse : plaques blanc-jaunâtre adhérentes → saignent au grattage</li>
+          <li>Érythémateuse atrophique : muqueuse rouge luisante, langue dépapillée</li>
+          <li>Hyperplasique : plaques blanches persistantes (DD : leucoplasie)</li>
+          <li>Perlèche : fissure commissure labiale (souvent bilatérale)</li>
+        </ul>
+        <p><strong>B. CANDIDOSE ŒSOPHAGIENNE</strong></p>
+        <ul>
+          <li>1ère cause d'œsophagite chez VIH (CD4 &lt; 200)</li>
+          <li>Dysphagie + douleurs rétrosternales</li>
+          <li>Diagnostic : endoscopie → plaques blanc-jaunâtres</li>
+        </ul>
+        <p><strong>C. CANDIDOSE VULVO-VAGINALE</strong></p>
+        <ul>
+          <li>Prurit + brûlures vulvaires + leucorrhées "lait caillé"</li>
+          <li>C. albicans (80%) + C. glabrata (20%)</li>
+          <li>Non IST — facteurs : antibiotiques, grossesse, diabète</li>
+        </ul>
+        <p><strong>D. CANDIDOSE CUTANÉE (Intertrigo)</strong></p>
+        <ul>
+          <li>Érythème suintant + bords "émiettés" + papules satellites</li>
+          <li>Plis inguinaux, interfessiers, sous-mammaires, axillaires, interdigitaux</li>
+        </ul>
+        <p><strong>E. ONYCHOMYCOSE À CANDIDA</strong></p>
+        <ul>
+          <li>Mains &gt;&gt; pieds ; périonyxis (tuméfaction périunguéale douloureuse) → onyxis secondaire</li>
+          <li>Facteurs : contacts eau, métiers exposés</li>
+        </ul>
+        <p><strong>F. CANDIDOSES SYSTÉMIQUES (Candidémie)</strong></p>
+        <ul>
+          <li>Candida dans au moins 1 hémoculture</li>
+          <li>Fièvre résistante aux antibiotiques + AEG</li>
+          <li>Localisations secondaires : choriorétinite, endocardite, spondylodiscite, folliculite</li>
+          <li>Mortalité &gt; 40% malgré traitement</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔬</span><span class="rubrique-label">Diagnostic</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Adapté à la localisation clinique :</p>
+        <ul>
+          <li><strong>Superficielle :</strong> examen direct (levures + pseudofilaments en Gram/KOH) + culture</li>
+          <li><strong>Systémique :</strong> hémocultures (x3) + β-D-glucane sérique (marqueur fungique)</li>
+          <li><strong>Œsophagienne :</strong> endoscopie + biopsies</li>
+          <li><strong>Fond d'œil :</strong> systématique lors de candidémie (nodules rétiniens)</li>
+          <li><strong>Echo cardiaque :</strong> si héroïnomane ou valvulopathie (végétations)</li>
+        </ul>
+        <div class="highlight-box">ℹ️ Culture positive à Candida ne signifie pas toujours une infection — Candida est commensal. Toujours corréler à la clinique et aux facteurs de risque.</div>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">💊</span><span class="rubrique-label">Traitement</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <table class="data-table">
+          <tr><th>Localisation</th><th>Traitement de 1ère ligne</th></tr>
+          <tr><td>Oropharyngée (légère)</td><td>Antifongiques locaux : nystatine, ampho B suspension, miconazole × 10-15j</td></tr>
+          <tr><td>Oropharyngée (ID)</td><td>Fluconazole 100-200mg/j per os</td></tr>
+          <tr><td>Œsophagienne</td><td>Fluconazole 200-400mg/j IV ou PO × 14-21j</td></tr>
+          <tr><td>Vulvo-vaginale (simple)</td><td>Azolés topiques (ovule clotrimazole × 3j) ou fluconazole 150mg monodose</td></tr>
+          <tr><td>Cutanée/intertrigo</td><td>Imidazolés topiques × 2-4 semaines + traiter macération</td></tr>
+          <tr><td>Candidémie/systémique</td><td>Échinocandine (caspofungine) ou fluconazole IV ; ablation cathéter ; ≥15j après dernière HC positive</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <hr class="sep">
+    <h3 style="color:var(--accent3);font-size:16px;margin-bottom:16px;">🏥 Cas Cliniques Didactiques — Candidoses</h3>
+    <div class="cas-card">
+      <h4>CAS 1 — Candidose génitale récidivante</h4>
+      <p class="scenario">Nathalie, 29 ans, consulte pour sa 4ème vulvovaginite en 8 mois avec prurit intense, brûlures et leucorrhées blanchâtres grumeleuses. Pas de diabète connu, pas de grossesse. Elle est sous pilule contraceptive. Prélèvement vaginal : C. albicans.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Candidose vulvo-vaginale récidivante (≥4 épisodes/an). La pilule œstro-progestative est un facteur favorisant (modifie le pH vaginal). Éliminer VIH et diabète par bilan. <strong>Traitement de l'épisode aigu :</strong> azolé topique × 3j ou fluconazole 150mg PO. <strong>Traitement d'entretien :</strong> fluconazole 150-300mg 1×/semaine × 6 mois. Mesures d'hygiène : sous-vêtements coton, éviter savons parfumés.
+      </div>
+    </div>
+    <div class="cas-card">
+      <h4>CAS 2 — Candidémie en réanimation</h4>
+      <p class="scenario">Patrick, 65 ans, opéré d'une péritonite sur perforation colique, en réanimation sous antibiothérapie large spectre depuis 12 jours, porteur d'un cathéter veineux central. Fièvre à 39,5°C résistante aux antibiotiques. Hémoculture : Candida albicans × 2 sur 24h.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Candidémie sur cathéter veineux central (facteur majeur : chirurgie digestive + antibiotiques + cathéter). Facteurs favorisants multiples. <strong>Actions immédiates :</strong> (1) Retrait et mise en culture du cathéter (2) Antifongique systémique : caspofungine (échinocandine) ou fluconazole IV, si souche non résistante (3) Fond d'œil (choriorétinite à Candida) (4) Echo cardiaque. Traitement ≥15j après dernière HC positive. Mortalité élevée → ne pas temporiser.
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAP 7 : DERMATOPHYTES -->
+  <div class="chapter-section">
+    <div class="chapter-title"><span class="num">7</span> Dermatophytes & Dermatophyties</div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">📌</span><span class="rubrique-label">Définition</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Champignons filamenteux à mycélium cloisonné, <strong>kératinophiles + kératinolytiques</strong> (adaptés à la kératine). <strong>Pathogènes vrais</strong> (≠ champignons opportunistes).</p>
+        <p>Infections : épidermophyties (épiderme), intertrigo (plis), onyxis (ongles), teignes (cheveux), folliculites (poils).</p>
+        <p>3 genres : <strong>Trichophyton</strong> (+20 espèces), <strong>Microsporum</strong> (10 espèces), <strong>Epidermophyton</strong> (1 espèce).</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🌍</span><span class="rubrique-label">Épidémiologie & Classification</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <table class="data-table">
+          <tr><th>Origine</th><th>Espèces</th><th>Transmission</th></tr>
+          <tr><td><span class="tag">Anthropophiles</span></td><td>T. rubrum (+++), T. violaceum, M. langeronii, E. floccosum</td><td>Interhumaine directe ou indirecte</td></tr>
+          <tr><td><span class="tag orange">Zoophiles</span></td><td>M. canis, T. verrucosum, T. mentagrophytes</td><td>Contact avec animal porteur</td></tr>
+          <tr><td><span class="tag green">Géophiles</span></td><td>M. gypseum, T. terrestre</td><td>Sol → homme (accidentel)</td></tr>
+        </table>
+        <p>Trichophyton rubrum = dermatophyte le plus répandu mondialement (anthropophile strict).</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔄</span><span class="rubrique-label">Physiopathologie & Transmission</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p>Le dermatophyte pénètre dans l'épiderme à la faveur d'une excoriation cutanée. Les filaments progressent de façon <strong>centrifuge</strong> → lésion arrondie érythémato-squameuse (épidermophytie circinée).</p>
+        <p>Pour les ongles : pénétration par la partie distale → progression vers la matrice.</p>
+        <p>Pour les cheveux : invasion à partir de l'ostium folliculaire → le cheveu envahi se casse.</p>
+        <p>Teignes guérissent à la puberté car le sébum (AG saturés C7-C11) a un pouvoir <strong>fongistatique</strong> sur les dermatophytes.</p>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🤒</span><span class="rubrique-label">Formes Cliniques</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <p><strong>A. ÉPIDERMOPHYTIES</strong></p>
+        <ul>
+          <li><strong>Épidermophytie circinée (Tinea circinata) :</strong> lésion arrondie érythémato-squameuse avec bordure vésiculeuse active + zone centrale cicatricielle, prurit</li>
+          <li><strong>Du visage (Tinea faciei) :</strong> érythème maculo-papuleux, prurit, aggravée par soleil/corticoïdes</li>
+          <li><strong>Des grands plis (Tinea cruris/inguinale) :</strong> inguinal, axillaire, sous-mammaire</li>
+          <li><strong>Intertrigo interdigito-plantaire (pied d'athlète) :</strong> desquamation/fissure entre les orteils — T. rubrum +++ — peut favoriser un érysipèle</li>
+          <li><strong>Kératodermie plantaire (Tinea pedum) :</strong> bilatérale, aspect "fariné"</li>
+          <li><strong>Kératodermie palmaire (Tinea manum) :</strong> unilatérale, H &gt; F, "syndrome 2 pieds-1 main"</li>
+        </ul>
+        <p><strong>B. ONYCHOMYCOSES (Tinea unguium)</strong></p>
+        <ul>
+          <li>40% des pathologies unguéales — orteils 80%, doigts 20%</li>
+          <li>T. rubrum (80%) : onychomycose sous-unguéale disto-latérale → onychodystrophie totale</li>
+          <li>Atteinte matricielle = onychodystrophie sévère</li>
+        </ul>
+        <p><strong>C. TEIGNES DU CUIR CHEVELU</strong></p>
+        <ul>
+          <li><strong>Teignes tondantes trichophytiques :</strong> nombreuses petites plaques squameuses, cheveux cassés à quelques mm, anthropophiles, enfants d'âge scolaire, guérison à la puberté. Fluorescence UV : négative.</li>
+          <li><strong>Teignes tondantes microsporiques :</strong> peu de grandes plaques bien délimitées peu squameuses, anthropophiles/zoophiles (M. canis). Fluorescence UV : positive.</li>
+          <li><strong>Teigne favique (Favus) :</strong> godets faviques (T. schoenleinii), cheveux non cassés mais fragilisés, <strong>alopécie cicatricielle définitive</strong>, fluorescence UV +, nécessite long contact familial.</li>
+          <li><strong>Kérion (teigne inflammatoire) :</strong> réaction immunitaire excessive, placard inflammatoire suintant + expulsion des cheveux + adénopathies satellites, espèces zoophiles/géophiles, très douloureux.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">🔬</span><span class="rubrique-label">Diagnostic</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <ul>
+          <li><strong>Lampe de Wood (UV) :</strong> Microsporum → fluorescence vert-jaune ✓ ; Trichophyton → pas de fluorescence</li>
+          <li><strong>Prélèvement :</strong> squames à la périphérie des lésions, cheveux arrachés à la pince, ongle (jonction sain-malade)</li>
+          <li><strong>Examen direct :</strong> filaments mycéliens + arthrospores — KOH éclaircissant</li>
+          <li><strong>Culture :</strong> milieu de Sabouraud +/- cycloheximide, 25-30°C, lecture J4-J5-J10-J15 → 1 mois</li>
+          <li>Identification sur aspect macro + microscopique des colonies (microconidies, macroconidies)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rubrique" onclick="toggleR(this)">
+      <div class="rubrique-header"><span class="rubrique-icon">💊</span><span class="rubrique-label">Traitement</span><span class="rubrique-arrow">▶</span></div>
+      <div class="rubrique-body">
+        <table class="data-table">
+          <tr><th>Localisation</th><th>Traitement local</th><th>Traitement général</th><th>Durée</th></tr>
+          <tr><td>Épidermophytie circinée</td><td>Kétoconazole, econazole, terbinafine crème</td><td>Si étendue : Griséofulvine/Terbinafine/Itraconazole</td><td>3-4 semaines</td></tr>
+          <tr><td>Intertrigo plis/pieds</td><td>Ciclopiroxolamine, terbinafine</td><td>Si récidivant : Griséofulvine 1g/j ou Terbinafine 250mg/j</td><td>3-8 semaines</td></tr>
+          <tr><td>Onyxis (orteils)</td><td>Amorolfine 5% laque 2×/semaine + avulsion mécanique</td><td>Terbinafine 250mg/j (1er choix) ou Itraconazole</td><td>6-18 mois</td></tr>
+          <tr><td>Onyxis (mains)</td><td>Solution filmogène azolée</td><td>Terbinafine 250mg/j</td><td>6 mois</td></tr>
+          <tr><td>Teignes tondantes</td><td>Imidazolé + savon antiseptique</td><td><strong>Griséofulvine 10-20mg/kg/j</strong> (enfants)</td><td>4-6 semaines</td></tr>
+          <tr><td>Teigne favique</td><td>Imidazolé topique</td><td>Griséofulvine × 8 semaines</td><td>8 semaines</td></tr>
+          <tr><td>Kérion</td><td>Idem teignes tondantes</td><td>Griséofulvine + corticothérapie courte (inflammation)</td><td>4-6 semaines</td></tr>
+        </table>
+        <p><strong>Prophylaxie :</strong> chaussettes en coton, changer quotidiennement, séchage soigneux entre les orteils, sandales aux piscines, traitement des animaux et de l'entourage en cas de zoophile.</p>
+      </div>
+    </div>
+
+    <hr class="sep">
+    <h3 style="color:var(--accent3);font-size:16px;margin-bottom:16px;">🏥 Cas Cliniques Didactiques — Dermatophytes</h3>
+    <div class="cas-card">
+      <h4>CAS 1 — Teigne microsporique chez l'enfant</h4>
+      <p class="scenario">Lison, 7 ans, présente une grande plaque circulaire (5cm) sur le cuir chevelu, bien délimitée, peu squameuse avec des cheveux cassés courts. Lampe de Wood : fluorescence verte. Elle a un chat à la maison récemment acquis.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Teigne tondante microsporique à Microsporum canis (zoophile — chat). Fluorescence UV positive = Microsporum. Examiner et traiter le chat (vétérinaire). Examen direct + culture : Microsporum canis identifié. <strong>Traitement :</strong> Griséofulvine 15mg/kg/j PO × 4-6 semaines + antifongique topique local (imidazolé). Informer l'école (dépistage des contacts). Traitement de toute la famille si autres cas.
+      </div>
+    </div>
+    <div class="cas-card">
+      <h4>CAS 2 — Onyxis chronique à dermatophyte</h4>
+      <p class="scenario">Bernard, 58 ans, diabétique type 2, présente depuis 3 ans une atteinte jaune-brunâtre et épaississement des ongles des 2 gros orteils avec des squames sous-unguéales. Examen direct + culture : Trichophyton rubrum.</p>
+      <button class="btn-reveal" onclick="revealCas(this)">Voir la résolution</button>
+      <div class="resolution">
+        <strong style="color:var(--accent2)">Résolution :</strong><br>
+        Onychomycose sous-unguéale disto-latérale à T. rubrum sur terrain diabétique (facteur favorisant). Diabète = risque d'infection bactérienne secondaire. <strong>Traitement :</strong> avulsion chimique de l'ongle (urée 40%) + Terbinafine 250mg/j × 6-9 mois (orteils) + Amorolfine 5% laque 2×/semaine localement. Bilan hépatique avant et pendant. Équilibrer le diabète. Hygiène podologique rigoureuse. Prévenir le patient de la durée longue.
+      </div>
+    </div>
+  </div>
+
+</div><!-- fin #cours -->
+
+<!-- ============ QCM 20 ============ -->
+<div id="qcm20" class="section">
+  <div class="eval-header">
+    <h2>✏️ Évaluation — 20 Questions QCM</h2>
+    <p>Couvre les 7 chapitres du cours · Une seule bonne réponse par question</p>
+  </div>
+  <div id="progress-wrap" class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+
+  <div id="qcm-container-20"></div>
+
+  <button class="btn-submit" id="btn-submit-20" onclick="submitQCM20()">Soumettre et voir mes résultats</button>
+
+  <div class="score-board" id="score-board-20">
+    <div class="score-big" id="score-big-20">—</div>
+    <div class="score-label">/ 20 questions</div>
+    <div class="score-mention" id="score-mention-20"></div>
+    <div class="correction-list" id="correction-list-20"></div>
+    <button class="btn-reset" onclick="resetQCM20()">🔄 Recommencer le QCM</button>
+  </div>
+</div>
+
+<!-- ============ CAS CLINIQUES QCM ============ -->
+<div id="cas-cliniques" class="section">
+  <div class="eval-header">
+    <h2>🏥 Cas Cliniques — 10 Cas × 5 QCM</h2>
+    <p>Résous chaque vignette clinique · Une seule bonne réponse par question</p>
+  </div>
+
+  <div id="cas-qcm-container"></div>
+
+  <button class="btn-submit" id="btn-submit-cas" onclick="submitCas()">Soumettre tous les cas</button>
+
+  <div class="score-board" id="score-board-cas">
+    <div class="score-big" id="score-big-cas">—</div>
+    <div class="score-label">/ 50 questions</div>
+    <div class="score-mention" id="score-mention-cas"></div>
+    <div class="correction-list" id="correction-list-cas"></div>
+    <button class="btn-reset" onclick="resetCas()">🔄 Recommencer les cas</button>
+  </div>
+</div>
+
+</div><!-- fin .main -->
+
+<script>
+// ==================== DATA ====================
+
+const qcm20Data = [
+  { q:"Quelle est la caractéristique principale des mycètes par rapport aux bactéries ?", opts:["Procaryotes sans noyau défini","Eucaryotes avec noyau bien défini","Organisme synthétisant leur propre énergie via la chlorophylle","Champignons autotrophes"], ans:1, exp:"Les mycètes sont des eucaryotes (noyau défini), contrairement aux bactéries (procaryotes). Ils n'ont pas de chlorophylle (≠ végétaux)."},
+  { q:"Quel champignon est responsable de la majorité des pneumocystoses humaines ?", opts:["Pneumocystis carinii","Pneumocystis jiroveci","Aspergillus fumigatus","Cryptococcus neoformans"], ans:1, exp:"Pneumocystis jiroveci (anciennement P. carinii) est l'agent de la pneumocystose humaine."},
+  { q:"À quel seuil de CD4 la prophylaxie primaire anti-Pneumocystis doit-elle être débutée chez un patient VIH ?", opts:["CD4 < 500/mm³","CD4 < 350/mm³","CD4 < 200/mm³","CD4 < 100/mm³"], ans:2, exp:"Prophylaxie primaire dès CD4 < 200/mm³ ou < 15% des lymphocytes chez le patient VIH."},
+  { q:"Le champignon dimorphique se présente en forme de levure :", opts:["À 25°C dans le sol","À 37°C dans l'organisme hôte","À toute température","Uniquement en culture sur Sabouraud"], ans:1, exp:"Dimorphisme thermique : forme levure (parasitaire) à 37°C in vivo ; forme filamenteuse à 25°C (sol, in vitro)."},
+  { q:"Quel est le réservoir principal de Cryptococcus neoformans ?", opts:["Sol humide acide","Fientes de pigeons","Muqueuse buccale humaine","Grottes à chauves-souris"], ans:1, exp:"C. neoformans = endo-exosaprophyte — retrouvé dans le jabot des pigeons et leurs fientes."},
+  { q:"Quelle est la forme clinique la plus fréquente de la cryptococcose chez l'immunodéprimé ?", opts:["Cryptococcose pulmonaire","Cryptococcose osseuse","Méningo-encéphalite","Cryptococcose cutanée"], ans:2, exp:"La méningoencéphalite représente >60% des cas (80% chez VIH/SIDA)."},
+  { q:"Quel antifongique est le traitement de première intention de la pneumocystose ?", opts:["Amphotéricine B","Voriconazole","Cotrimoxazole","Itraconazole"], ans:2, exp:"Le cotrimoxazole (TMP-SMX) est le traitement curatif ET prophylactique de 1ère intention."},
+  { q:"L'image radiologique en 'grelot' est caractéristique de :", opts:["Aspergillose pulmonaire invasive","Aspergillome","Cryptococcose pulmonaire","Pneumocystose"], ans:1, exp:"L'aspergillome se traduit radiologiquement par une image en grelot : opacité arrondie dans une cavité + croissant aérique."},
+  { q:"Quel genre de dermatophyte est responsable de la plupart des intertrigos des pieds ?", opts:["Microsporum gypseum","Epidermophyton floccosum","Trichophyton rubrum","Trichophyton verrucosum"], ans:2, exp:"T. rubrum est l'anthropophile strict le plus répandu, responsable de la majorité des intertrigos plantaires."},
+  { q:"La fluorescence à la lampe de Wood est positive pour :", opts:["Les teignes à Trichophyton","Les teignes à Microsporum","Les onychomycoses à T. rubrum","Les candidoses cutanées"], ans:1, exp:"Microsporum → fluorescence vert-jaune sous UV. Trichophyton → pas de fluorescence."},
+  { q:"Candida albicans est normalement un commensal de :", opts:["La peau saine","Les muqueuses digestives et vaginales","Le sang","Les poumons"], ans:1, exp:"C. albicans est un commensal habituel des muqueuses digestives et vaginales — son pouvoir pathogène est conditionnel."},
+  { q:"Quel marqueur biologique est le plus utile pour le diagnostic précoce de l'aspergillose invasive chez le neutropénique ?", opts:["Anticorps anti-Aspergillus","Galactomannane sérique","β-D-glucane urinaire","CrAg sérique"], ans:1, exp:"Le galactomannane sérique (ELISA) est le marqueur de référence pour le diagnostic d'aspergillose invasive chez les neutropéniques."},
+  { q:"Malassezia furfur est classé comme :", opts:["Endosaprophyte","Exosaprophyte","Endo-exosaprophyte","Épisaprophyte"], ans:3, exp:"M. furfur est un épisaprophyte cutané — présent à la surface de la peau chez ~100% des adultes sans pathologie."},
+  { q:"Quel est le traitement de première ligne de l'aspergillose pulmonaire invasive ?", opts:["Itraconazole","Amphotéricine B standard","Voriconazole","Griséofulvine"], ans:2, exp:"Voriconazole est le traitement de 1ère ligne de l'API depuis les recommandations 2002."},
+  { q:"La teigne favique est caractérisée par :", opts:["Guérison spontanée à la puberté","Alopécie cicatricielle définitive","Fluorescence UV négative","Grande contagiosité"], ans:1, exp:"Teigne favique (T. schoenleinii) : alopécie cicatricielle définitive (≠ teignes tondantes qui guérissent à la puberté)."},
+  { q:"Le traitement d'induction de la cryptococcose neuroméningée associe :", opts:["Fluconazole + 5-FC","Amphotéricine B + 5-fluorocytosine","Voriconazole + cotrimoxazole","Itraconazole + caspofungine"], ans:1, exp:"Phase d'induction : AmB 0,7-1mg/kg/j + 5-FC 100-150mg/kg/j pendant ≥ 2 semaines."},
+  { q:"L'Histoplasma capsulatum est retrouvé à l'examen direct sous forme de :", opts:["Levures extracellulaires de 20µm","Levures intracellulaires de 2-4µm avec halo clair","Sphérules à endospores","Filaments larges non cloisonnés"], ans:1, exp:"H. capsulatum var. capsulatum : levure 2-4µm intracellulaire (macrophages) avec pseudo-capsule (halo clair), bourgeon polaire."},
+  { q:"Quelle est la porte d'entrée principale des champignons dimorphiques chez l'homme ?", opts:["Voie cutanée traumatique","Voie pulmonaire par inhalation de conidies","Voie digestive par ingestion","Voie sanguine par cathéter"], ans:1, exp:"La voie pulmonaire par inhalation de conidies/arthroconidies est la principale voie de contamination."},
+  { q:"Le pityriasis versicolor est dû à la prolifération de :", opts:["Candida albicans","Malassezia furfur","Trichophyton rubrum","Aspergillus flavus"], ans:1, exp:"M. furfur (épisaprophyte cutané) prolifère dans certaines conditions → pityriasis versicolor (macules hypo/hyperpigmentées)."},
+  { q:"Quelle est la durée minimale recommandée pour le traitement d'un onyxis à dermatophyte des orteils par terbinafine ?", opts:["4 semaines","3 mois","6 mois","18 mois"], ans:2, exp:"Terbinafine 250mg/j × 6 mois pour les ongles des orteils (3 mois pour les doigts)."}
+];
+
+const casData = [
+  {
+    num:1, titre:"Femme VIH+ avec toux sèche",
+    vignette:"<strong>Marie, 36 ans</strong>, PVVIH (CD4 = 145/mm³), non traitée. Elle consulte pour toux sèche progressive depuis 4 semaines, fièvre à 38,5°C et dyspnée d'effort. La radio thoracique montre un syndrome interstitiel bilatéral diffus. Saturation en O₂ : 91%.",
+    qcms:[
+      { q:"Quelle est l'infection opportuniste la plus probable ?", opts:["Tuberculose pulmonaire","Pneumocystose (Pneumocystis jiroveci)","Aspergillose invasive","Cryptococcose pulmonaire"], ans:1, exp:"CD4=145 + toux sèche + syndrome interstitiel bilatéral = pneumocystose typique."},
+      { q:"Quel examen diagnostique de certitude devez-vous pratiquer en urgence ?", opts:["Ponction lombaire","Lavage broncho-alvéolaire (LBA)","Hémocultures fongiques","Scanner abdominal"], ans:1, exp:"LBA = examen de référence pour rechercher P. jiroveci (coloration + PCR)."},
+      { q:"Le traitement de 1ère intention est :", opts:["Amphotéricine B IV","Cotrimoxazole (TMP-SMX)","Voriconazole oral","Itraconazole IV"], ans:1, exp:"Cotrimoxazole = 1er choix curatif de la pneumocystose."},
+      { q:"Étant donné la saturation à 91%, que faut-il ajouter au traitement antifongique ?", opts:["Antibiothérapie antibactérienne","Corticothérapie","Antirétroviraux immédiats","Antitussifs codéinés"], ans:1, exp:"La corticothérapie est indiquée en cas d'hypoxémie pour réduire l'inflammation alvéolaire."},
+      { q:"À partir de quel seuil de CD4 aurait-on dû débuter la prophylaxie primaire chez cette patiente ?", opts:["CD4 < 500/mm³","CD4 < 350/mm³","CD4 < 200/mm³","CD4 < 100/mm³"], ans:2, exp:"Prophylaxie anti-PCP dès CD4 < 200/mm³ chez VIH."}
+    ]
+  },
+  {
+    num:2, titre:"Enfant avec plaques cuir chevelu",
+    vignette:"<strong>Théo, 8 ans</strong>, présente depuis 3 semaines des plaques alopéciques du cuir chevelu avec squames. Son chien (labrador) a aussi des lésions cutanées. Lampe de Wood : fluorescence vert-jaune. Culture sur Sabouraud : Microsporum canis.",
+    qcms:[
+      { q:"Quelle est la forme clinique de cette teigne ?", opts:["Teigne favique","Teigne tondante trichophytique","Teigne tondante microsporique","Kérion inflammatoire"], ans:2, exp:"Grande plaque bien délimitée peu squameuse + fluorescence UV + M. canis = teigne microsporique."},
+      { q:"Quel est l'animal vecteur identifié dans ce cas ?", opts:["Chat (anthropophile)","Chien (zoophile)","Sol tellurique (géophile)","Autre enfant (anthropophile)"], ans:1, exp:"M. canis est zoophile — transmission par contact avec chien ou chat infecté."},
+      { q:"Quel est le traitement systémique de référence pour cette teigne chez l'enfant ?", opts:["Terbinafine IV","Griséofulvine per os","Amphotéricine B","Voriconazole"], ans:1, exp:"Griséofulvine 10-20mg/kg/j per os = traitement de référence des teignes chez l'enfant."},
+      { q:"Quelle mesure complémentaire doit accompagner le traitement de Théo ?", opts:["Hospitalisation en isolement strict","Traitement de l'animal vecteur chez le vétérinaire","Sérologie VIH de l'enfant","Vaccination anti-mycosique"], ans:1, exp:"Traitement du chien par le vétérinaire est indispensable pour éviter la réinfection."},
+      { q:"L'évolution naturelle de cette teigne sans traitement serait :", opts:["Alopécie cicatricielle définitive","Guérison spontanée à la puberté","Dissémination systémique rapide","Extension aux ongles systématique"], ans:1, exp:"Les teignes tondantes guérissent spontanément à la puberté grâce au pouvoir fongistatique du sébum."}
+    ]
+  },
+  {
+    num:3, titre:"Agriculteur avec syndrome méningé",
+    vignette:"<strong>Paul, 52 ans</strong>, agriculteur de retour d'une visite de grottes au Mexique, PVVIH (CD4 = 78/mm³). Céphalées intenses depuis 2 semaines, fièvre, vomissements et raideur de nuque modérée. PL : méningite lymphocytaire. Encre de Chine sur LCR : levures encapsulées à large halo.",
+    qcms:[
+      { q:"Quel est le diagnostic le plus probable ?", opts:["Méningite à Histoplasma capsulatum","Méningo-encéphalite cryptococcique","Méningite tuberculeuse","Neurotoxoplasmose"], ans:1, exp:"Levures encapsulées à l'encre de Chine + CD4<100 + VIH = cryptococcose neuroméningée."},
+      { q:"Quel test rapide confirme ce diagnostic ?", opts:["PCR Mycobacterium tuberculosis","CrAg sérique (antigène cryptococcique)","Galactomannane sérique","Antigène urinaire Histoplasma"], ans:1, exp:"Le CrAg (antigène cryptococcique) sérique et/ou LCR = test de référence (sensibilité >95%)."},
+      { q:"Quel est le traitement d'induction de référence dans ce cas ?", opts:["Fluconazole seul","AmB + 5-fluorocytosine","Itraconazole + cotrimoxazole","Voriconazole + caspofungine"], ans:1, exp:"Induction : AmB 0,7-1mg/kg/j + 5-FC 100-150mg/kg/j IV × ≥2 semaines."},
+      { q:"Si la pression du LCR est à 35 cm H₂O, quelle mesure s'impose ?", opts:["Mannitol IV","Ponctions lombaires évacuatrices","Corticothérapie systémique","Dérivation ventriculo-péritonéale d'emblée"], ans:1, exp:"HTIC > 25 cm H₂O → PL évacuatrices répétées jusqu'à normalisation de la pression."},
+      { q:"Quelle est la durée minimale du traitement de maintenance par fluconazole ?", opts:["2 semaines","6 semaines","6 mois à 1 an","À vie systématiquement"], ans:2, exp:"Maintenance : fluconazole 200mg/j × 6 mois à 1 an (ou tant que immunodéprimé)."}
+    ]
+  },
+  {
+    num:4, titre:"Patient diabétique avec lésion cutanée annulaire",
+    vignette:"<strong>Rémi, 47 ans</strong>, diabétique de type 2, présente depuis 3 semaines une lésion annulaire érythémato-squameuse de 5cm sur le bras droit, prurigineuse, avec bordure vésiculeuse active et centre cicatriciel. Son chat a récemment eu des lésions similaires.",
+    qcms:[
+      { q:"Quel est le diagnostic dermatologique le plus probable ?", opts:["Psoriasis annulaire","Épidermophytie circinée à dermatophyte zoophile","Candidose cutanée","Pityriasis versicolor"], ans:1, exp:"Lésion annulaire + bordure active + centre cicatriciel + contact animal = épidermophytie circinée (tinea circinata)."},
+      { q:"Quel agent zoophile est le plus probablement en cause ?", opts:["Trichophyton rubrum","Epidermophyton floccosum","Microsporum canis","Malassezia furfur"], ans:2, exp:"M. canis = dermatophyte zoophile transmis par le chat."},
+      { q:"Le diabète de ce patient constitue :", opts:["Un facteur protecteur contre les mycoses","Un facteur favorisant les mycoses","Un facteur sans incidence sur les mycoses","Une contre-indication aux antifongiques"], ans:1, exp:"Le diabète est un facteur favorisant majeur des mycoses (troubles de l'immunité + hyperglycémie)."},
+      { q:"Quel traitement local est adapté en première intention ?", opts:["Corticoïdes topiques","Azolés topiques (kétoconazole, éconazole)","Antibiotiques topiques","Rétinoïdes topiques"], ans:1, exp:"Azolés topiques = traitement de 1ère intention des épidermophyties circinées."},
+      { q:"Quel diagnostic différentiel à éliminer devant une lésion annulaire du visage ?", opts:["Psoriasis annulaire","Lupus érythémateux","Carcinome basocellulaire","Les deux premiers"], ans:3, exp:"Devant une lésion annulaire, éliminer : psoriasis, eczéma nummulaire, lupus, pityriasis rosé de Gibert."}
+    ]
+  },
+  {
+    num:5, titre:"Femme avec leucorrhées et prurit",
+    vignette:"<strong>Sandra, 24 ans</strong>, consulte pour prurit vulvaire intense et leucorrhées blanchâtres grumeleuses depuis 1 semaine. Elle vient de terminer une antibiothérapie pour une sinusite. Examen gynécologique : érythème vulvaire + leucorrhées caillebotées. Prélèvement vaginal : C. albicans.",
+    qcms:[
+      { q:"Quel facteur favorisant explique principalement la candidose dans ce contexte ?", opts:["Grossesse","Antibiothérapie à large spectre","Diabète","Immunodépression sévère"], ans:1, exp:"L'antibiothérapie détruit les bactéries compétitrices vaginales → prolifération de C. albicans."},
+      { q:"Le diagnostic de candidose vulvo-vaginale simple est :", opts:["Une IST à déclarer","Une mycose strictement exogène","Non considéré comme une IST","Toujours associé au VIH"], ans:2, exp:"La candidose vulvo-vaginale n'est pas considérée comme une IST."},
+      { q:"Quel est le traitement recommandé pour un 1er épisode simple ?", opts:["Fluconazole 150mg dose unique ou azolé ovule ×3j","AmB IV en urgence","Cotrimoxazole oral","Griséofulvine 10j"], ans:0, exp:"1er épisode simple : ovule azolé × 3j ou fluconazole 150mg monodose per os."},
+      { q:"En cas de 4ème récidive en 12 mois, quelle stratégie adopter ?", opts:["Même traitement qu'un 1er épisode","Traitement d'entretien fluconazole hebdomadaire × 6 mois","Amphotéricine B en prophylaxie","Dépistage du partenaire systématique"], ans:1, exp:"Candidose vaginale récidivante : traitement d'entretien fluconazole 150mg/semaine × 6 mois."},
+      { q:"Quelle pathologie sous-jacente doit systématiquement être recherchée en cas de candidoses récidivantes ?", opts:["Hypothyroïdie","VIH et diabète","Anémie ferriprive","Lupus érythémateux"], ans:1, exp:"Candidoses récidivantes → toujours chercher VIH et diabète."}
+    ]
+  },
+  {
+    num:6, titre:"Neutropénique fébrile post-chimiothérapie",
+    vignette:"<strong>Ahmed, 58 ans</strong>, leucémie myéloïde aiguë, post-chimiothérapie J+18, neutropénie profonde (PNN = 0,1 G/L). Fièvre à 39°C résistante aux antibiotiques depuis 5 jours. Scanner thoracique : nodule avec signe du halo. Galactomannane sérique positif (index = 1,8).",
+    qcms:[
+      { q:"Quel est le diagnostic fongique le plus probable ?", opts:["Candidémie","Aspergillose pulmonaire invasive","Cryptococcose pulmonaire","Histoplasmose disséminée"], ans:1, exp:"Galactomannane + signe du halo au scanner + neutropénie = aspergillose invasive."},
+      { q:"Quel est l'agent pathogène le plus souvent responsable dans ce contexte ?", opts:["Aspergillus niger","Aspergillus fumigatus","Aspergillus flavus","Aspergillus terreus"], ans:1, exp:"Aspergillus fumigatus est l'espèce la plus fréquente en pathologie humaine."},
+      { q:"Quel est le traitement de 1ère ligne recommandé ?", opts:["Amphotéricine B standard","Itraconazole oral","Voriconazole IV","Caspofungine IV seule"], ans:2, exp:"Voriconazole IV = traitement de référence de l'API (supérieur à AmB en termes de survie)."},
+      { q:"Quelle mesure préventive aurait dû être appliquée dans le service ?", opts:["Isolement inverse avec filtration HEPA","Antibiothérapie prophylactique prolongée","Administration de corticoïdes préventifs","Transfusion de granulocytes systématique"], ans:0, exp:"Services à risque : chambres à pression positive avec filtration HEPA, bionettoyage strict, pas de plantes/fruits."},
+      { q:"La dissémination de l'aspergillose peut toucher :", opts:["Uniquement les poumons","Poumons, cerveau, reins, foie, cœur","Uniquement le SNC","Uniquement la peau"], ans:1, exp:"API peut se disséminer au cerveau, reins, foie, cœur — d'où la gravité extrême chez neutropéniques."}
+    ]
+  },
+  {
+    num:7, titre:"Éleva de poulets avec syndrome pseudo-grippal",
+    vignette:"<strong>Jean-Baptiste, 41 ans</strong>, propriétaire d'un élevage intensif de poulets en Haïti, revient d'un nettoyage de poulaillers. 10 jours après, il développe fièvre à 39°C, toux, dyspnée et adénopathies médiastinales à la radio. Sérologie VIH négative.",
+    qcms:[
+      { q:"Quel champignon dimorphique doit-on suspecter en priorité ?", opts:["Coccidioides immitis","Histoplasma capsulatum","Blastomyces dermatitidis","Paracoccidioides brasiliensis"], ans:1, exp:"Élevage de poulets + fientes + Haiti/Amériques = Histoplasma capsulatum (fientes d'oiseaux = réservoir majeur)."},
+      { q:"Quelle est la forme clinique la plus probable ici ?", opts:["Histoplasmose pulmonaire aiguë primitive","Histoplasmose disséminée","Histoplasmose cavitaire chronique","Histoplasmose africaine à grandes formes"], ans:0, exp:"Syndrome pseudo-grippal 5-10j après inhalation massive de conidies = forme aiguë primitive."},
+      { q:"Quel test diagnostique est le plus sensible chez ce patient immunocompétent fébrile ?", opts:["Antigène urinaire Histoplasma","PCR seule","Sérologie Histoplasma IgM","Culture du sang"], ans:0, exp:"L'antigène urinaire Histoplasma est sensible >90% chez les PVVIH fébriles ; utile aussi chez IC si charge élevée."},
+      { q:"Quel est le traitement pour une forme légère chez un immunocompétent ?", opts:["Abstention thérapeutique (guérison spontanée fréquente) ou Itraconazole","Amphotéricine B systématiquement","Cotrimoxazole","Voriconazole IV"], ans:0, exp:"Forme légère chez IC : observation ou Itraconazole 200-400mg/j selon symptômes. AmB réservée aux formes sévères."},
+      { q:"La manipulation de cultures d'Histoplasma en forme mycélienne :", opts:["Est totalement sans risque","Nécessite un laboratoire de sécurité P3","Peut être faite en sécurité P1","Nécessite seulement des gants stériles"], ans:1, exp:"Culture filamenteuse d'Histoplasma = très contaminante → laboratoire P3 obligatoire."}
+    ]
+  },
+  {
+    num:8, titre:"Ouvrier avec lésion cutanée chronique des pieds",
+    vignette:"<strong>Olivier, 35 ans</strong>, maçon, consulte pour des lésions blanchâtres des espaces interdigitaux plantaires avec fissuration douloureuse, prurit et macération depuis 2 ans. Il nage fréquemment en piscine commune. Examen : 3e et 4e espaces inter-orteils, macération suintante.",
+    qcms:[
+      { q:"Quel est le diagnostic le plus probable ?", opts:["Candidose interdigitale","Intertrigo dermatophytique (pied d'athlète)","Psoriasis palmoplantaire","Eczéma dyshidrosique"], ans:1, exp:"Intertrigo interdigitoplantaire = localisation typique des dermatophytes (T. rubrum +++), fréquent chez sportifs/piscines."},
+      { q:"Quelle complication bactérienne redoute-t-on principalement ?", opts:["Septicémie à Staphylocoque","Érysipèle de jambe","Endocardite à Streptocoque","Méningite bactérienne"], ans:1, exp:"L'intertrigo plantaire peut constituer une porte d'entrée pour un érysipèle de jambe."},
+      { q:"Quelle mesure hygiénique est essentielle pour prévenir les récidives ?", opts:["Porter des chaussures fermées sans chaussettes","Sécher soigneusement les pieds entre les orteils","Se baigner plus fréquemment pour hydrater","Appliquer des crèmes hydratantes épaisses"], ans:1, exp:"Séchage rigoureux entre les orteils + chaussettes coton + sandales aux piscines = prévention majeure."},
+      { q:"Quel traitement local est approprié en 1ère intention ?", opts:["Corticoïde topique","Terbinafine crème","Antibiotique local","Vaseline simplement"], ans:1, exp:"Terbinafine crème (allylamines) ou imidazolé topique = traitement de 1ère ligne des intertrigos à dermatophytes."},
+      { q:"Si l'atteinte s'étend à 1 main associée aux 2 pieds, on parle de :", opts:["Syndrome de Cushing mycosique","Syndrome 2 pieds-1 main à T. rubrum","Candidose systémique","Malasseziose étendue"], ans:1, exp:"L'association 2 pieds + 1 main ('two feet-one hand') est quasi-pathognomonique de T. rubrum."}
+    ]
+  },
+  {
+    num:9, titre:"Sidéen avec lésions cutanées et fièvre",
+    vignette:"<strong>Christian, 44 ans</strong>, VIH connu (CD4 = 195/mm³, sous ARV mais inobservant), fièvre à 38,5°C, toux, et apparition de papules ombiliquées du visage. LBA effectué : négative pour Pneumocystis. Culture sur milieu hématine-olivine : identification du champignon.",
+    qcms:[
+      { q:"Quel champignon tropical doit être évoqué devant des papules ombiliquées chez un VIH venu d'Asie du SE ?", opts:["Cryptococcus neoformans","Talaromyces marneffei (ex-Penicillium marneffei)","Histoplasma capsulatum","Blastomyces dermatitidis"], ans:1, exp:"T. marneffei : champignon endémique en Asie du SE, papules ombiliquées cutanées chez VIH = pathognomique."},
+      { q:"Quel est le mécanisme de contamination de Talaromyces marneffei ?", opts:["Contact direct interhumain","Inhalation de spores environnementales","Ingestion d'eau contaminée","Morsure d'arthropode"], ans:1, exp:"Talaromyces = champignon dimorphique tellurique — inhalation de spores (Asie du SE, bambous, rat des bambous)."},
+      { q:"En dehors des papules ombiliquées, quelles autres lésions peut-on retrouver ?", opts:["Seulement lésions cutanées","Fièvre + AEG + adénopathies + lésions hépatospléniques","Uniquement atteinte pulmonaire","Uniquement méningite"], ans:1, exp:"Talaromycose = fièvre, AEG, adénopathies, hépato-splénomégalie + papules ombiliquées caractéristiques."},
+      { q:"Le CD4 à 195/mm³ avec cette infection révèle :", opts:["Bon contrôle de l'immunité sous ARV","Inobservance aux ARV avec reconstitution immunitaire insuffisante","Erreur de prélèvement","Infection non liée à l'immunodépression"], ans:1, exp:"CD4 = 195 sous ARV témoigne d'une réponse immunitaire insuffisante par inobservance — infection opportuniste possible."},
+      { q:"Quel traitement est recommandé pour les formes sévères de talaromycose ?", opts:["Fluconazole seul","Amphotéricine B (induction) puis itraconazole (consolidation)","Griséofulvine + cotrimoxazole","Voriconazole seul"], ans:1, exp:"Talaromycose sévère : AmB en induction puis Itraconazole en consolidation/entretien."}
+    ]
+  },
+  {
+    num:10, titre:"Nourrisson avec éruption buccale",
+    vignette:"<strong>Dylan, 6 mois</strong>, allaité, présente depuis 1 semaine des plaques blanches adhérentes sur la langue et le palais qui saignent légèrement au grattage. Sa mère a des lésions érythémateuses du mamelon. Pas de fièvre.",
+    qcms:[
+      { q:"Quel est le diagnostic du nourrisson ?", opts:["Leucoplasie orale","Candidose oropharyngée pseudomembraneuse (Muguet)","Lichen plan buccal","Aphtes récurrents"], ans:1, exp:"Muguet = plaques blanches adhérentes qui saignent au grattage = candidose pseudomembraneuse, typique chez nourrisson."},
+      { q:"Comment l'enfant a-t-il probablement été contaminé ?", opts:["Par l'eau du biberon","Lors du passage vaginal à la naissance ou via le mamelon maternel","Par transmission aérienne","Par l'alimentation solide"], ans:1, exp:"Le nourrisson se contamine à la naissance via le canal vaginal, ou l'infection est bidirectionnelle avec le mamelon maternel."},
+      { q:"Quelle est la lésion maternelle associée à cet allaitement ?", opts:["Abcès du sein","Candidose du mamelon (mastite candidosique)","Galactocèle","Mastite bactérienne"], ans:1, exp:"La candidose peut se transmettre entre le muguet du nourrisson et le mamelon maternel → candidose du mamelon."},
+      { q:"Quel facteur physiologique explique la vulnérabilité du nourrisson aux candidoses ?", opts:["Excès d'IgG maternels","Immaturité du système immunitaire","Acidité gastrique élevée","Microbiote intestinal hyperactif"], ans:1, exp:"L'immaturité du système immunitaire du nourrisson favorise le développement des candidoses."},
+      { q:"Quel est le traitement local approprié pour le muguet du nourrisson ?", opts:["Fluconazole IV","Nystatine suspension buccale ou amphotéricine B suspension","Voriconazole oral","Amphotéricine B IV"], ans:1, exp:"Muguet du nourrisson : nystatine suspension buccale ou amphotéricine B suspension × 10-15j. Traiter aussi la mère."}
+    ]
+  }
+];
+
+// ==================== FUNCTIONS ====================
+
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function toggleR(el) {
+  el.classList.toggle('open');
+}
+
+function revealCas(btn) {
+  btn.closest('.cas-card').classList.toggle('show-resolution');
+  btn.textContent = btn.closest('.cas-card').classList.contains('show-resolution') ? 'Masquer la résolution' : 'Voir la résolution';
+}
+
+// Build QCM 20
+function buildQCM20() {
+  const container = document.getElementById('qcm-container-20');
+  container.innerHTML = '';
+  qcm20Data.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'qcm-card';
+    card.id = 'q20-' + idx;
+    card.innerHTML = `
+      <div class="qcm-num">QUESTION ${String(idx+1).padStart(2,'0')} / 20 — Mycologie</div>
+      <div class="qcm-q">${item.q}</div>
+      <div class="qcm-options">
+        ${item.opts.map((o,i) => `
+          <label class="qcm-option" id="opt20-${idx}-${i}" onclick="selectOpt20(${idx},${i})">
+            <div class="qcm-radio"></div>
+            <span>${String.fromCharCode(65+i)}. ${o}</span>
+          </label>
+        `).join('')}
+      </div>
+      <div class="qcm-feedback" id="fb20-${idx}"></div>
+    `;
+    container.appendChild(card);
+  });
+  updateProgress20();
+}
+
+let sel20 = new Array(20).fill(null);
+
+function selectOpt20(qi, oi) {
+  if (document.getElementById('score-board-20').classList.contains('show')) return;
+  sel20[qi] = oi;
+  for (let i = 0; i < qcm20Data[qi].opts.length; i++) {
+    const el = document.getElementById(`opt20-${qi}-${i}`);
+    el.classList.toggle('selected', i === oi);
+  }
+  updateProgress20();
+}
+
+function updateProgress20() {
+  const answered = sel20.filter(v => v !== null).length;
+  document.getElementById('progress-bar').style.width = (answered/20*100) + '%';
+}
+
+function submitQCM20() {
+  if (sel20.filter(v=>v!==null).length < 20) {
+    alert('Veuillez répondre à toutes les 20 questions avant de soumettre.');
+    return;
+  }
+  let score = 0;
+  const corrections = [];
+  qcm20Data.forEach((item, idx) => {
+    const card = document.getElementById('q20-'+idx);
+    const isCorrect = sel20[idx] === item.ans;
+    if (isCorrect) score++;
+    card.classList.add(isCorrect ? 'correct' : 'wrong');
+    for (let i = 0; i < item.opts.length; i++) {
+      const opt = document.getElementById(`opt20-${idx}-${i}`);
+      opt.style.pointerEvents = 'none';
+      if (i === item.ans) opt.classList.add('correct-ans');
+      else if (i === sel20[idx] && !isCorrect) opt.classList.add('wrong-ans');
+    }
+    const fb = document.getElementById(`fb20-${idx}`);
+    fb.classList.add('show', isCorrect ? 'ok' : 'nok');
+    fb.innerHTML = isCorrect ? `✅ Correct ! ${item.exp}` : `❌ Incorrect. Bonne réponse : <strong>${String.fromCharCode(65+item.ans)}. ${item.opts[item.ans]}</strong><br>${item.exp}`;
+    corrections.push({ ok: isCorrect, q: item.q, correct: item.opts[item.ans], given: item.opts[sel20[idx]] });
+  });
+
+  const pct = Math.round(score/20*100);
+  let mention = pct >= 90 ? '🏆 Excellent — Félicitations !' : pct >= 75 ? '🎓 Très bien' : pct >= 60 ? '✔️ Passable — Revoir les points faibles' : '📚 Insuffisant — Relire le cours';
+  let mention_color = pct >= 90 ? '#81c784' : pct >= 75 ? '#4fc3f7' : pct >= 60 ? '#ffb74d' : '#ef5350';
+
+  document.getElementById('score-big-20').textContent = score;
+  document.getElementById('score-mention-20').textContent = mention;
+  document.getElementById('score-mention-20').style.color = mention_color;
+
+  const cl = document.getElementById('correction-list-20');
+  cl.innerHTML = '<h3 style="color:var(--gold);font-family:Playfair Display,serif;margin-bottom:16px;">Correction détaillée</h3>';
+  corrections.forEach((c,i) => {
+    cl.innerHTML += `<div class="correction-item"><span class="ci-icon">${c.ok?'✅':'❌'}</span><div class="ci-text"><strong>Q${i+1} :</strong> ${c.q}<br>${c.ok ? `Bonne réponse : ${c.correct}` : `Ta réponse : ${c.given} → Correct : <span style="color:var(--accent2)">${c.correct}</span>`}</div></div>`;
+  });
+
+  document.getElementById('score-board-20').classList.add('show');
+  document.getElementById('btn-submit-20').disabled = true;
+  document.getElementById('score-board-20').scrollIntoView({behavior:'smooth'});
+}
+
+function resetQCM20() {
+  sel20 = new Array(20).fill(null);
+  document.getElementById('score-board-20').classList.remove('show');
+  document.getElementById('btn-submit-20').disabled = false;
+  buildQCM20();
+}
+
+// Build Cas Cliniques QCM
+function buildCas() {
+  const container = document.getElementById('cas-qcm-container');
+  container.innerHTML = '';
+  casData.forEach((cas, ci) => {
+    const block = document.createElement('div');
+    block.className = 'cas-qcm-block';
+    block.id = 'cas-block-' + ci;
+    let qcmHtml = cas.qcms.map((q, qi) => `
+      <div class="qcm-card" id="cas-q-${ci}-${qi}" style="margin-top:16px;">
+        <div class="qcm-num">CAS ${cas.num} — QUESTION ${qi+1} / ${cas.qcms.length}</div>
+        <div class="qcm-q">${q.q}</div>
+        <div class="qcm-options">
+          ${q.opts.map((o,oi) => `
+            <label class="qcm-option" id="casopt-${ci}-${qi}-${oi}" onclick="selectCasOpt(${ci},${qi},${oi})">
+              <div class="qcm-radio"></div>
+              <span>${String.fromCharCode(65+oi)}. ${o}</span>
+            </label>
+          `).join('')}
+        </div>
+        <div class="qcm-feedback" id="casfb-${ci}-${qi}"></div>
+      </div>
+    `).join('');
+
+    block.innerHTML = `
+      <div class="cas-qcm-num">CAS CLINIQUE N°${cas.num}</div>
+      <h3 style="color:var(--gold);font-family:Playfair Display,serif;margin-bottom:12px;">${cas.titre}</h3>
+      <div class="cas-qcm-vignette">${cas.vignette}</div>
+      ${qcmHtml}
+    `;
+    container.appendChild(block);
+  });
+}
+
+let selCas = casData.map(c => new Array(c.qcms.length).fill(null));
+
+function selectCasOpt(ci, qi, oi) {
+  if (document.getElementById('score-board-cas').classList.contains('show')) return;
+  selCas[ci][qi] = oi;
+  for (let i = 0; i < casData[ci].qcms[qi].opts.length; i++) {
+    document.getElementById(`casopt-${ci}-${qi}-${i}`).classList.toggle('selected', i === oi);
+  }
+}
+
+function submitCas() {
+  let allAnswered = true;
+  selCas.forEach((cas, ci) => {
+    cas.forEach((v, qi) => { if (v === null) allAnswered = false; });
+  });
+  if (!allAnswered) {
+    alert('Veuillez répondre à toutes les questions de tous les cas cliniques.');
+    return;
+  }
+
+  let score = 0, total = 0;
+  const corrections = [];
+
+  casData.forEach((cas, ci) => {
+    cas.qcms.forEach((q, qi) => {
+      total++;
+      const isCorrect = selCas[ci][qi] === q.ans;
+      if (isCorrect) score++;
+      const card = document.getElementById(`cas-q-${ci}-${qi}`);
+      card.classList.add(isCorrect ? 'correct' : 'wrong');
+      for (let i = 0; i < q.opts.length; i++) {
+        const opt = document.getElementById(`casopt-${ci}-${qi}-${i}`);
+        opt.style.pointerEvents = 'none';
+        if (i === q.ans) opt.classList.add('correct-ans');
+        else if (i === selCas[ci][qi] && !isCorrect) opt.classList.add('wrong-ans');
+      }
+      const fb = document.getElementById(`casfb-${ci}-${qi}`);
+      fb.classList.add('show', isCorrect ? 'ok' : 'nok');
+      fb.innerHTML = isCorrect ? `✅ Correct ! ${q.exp}` : `❌ Incorrect. Bonne réponse : <strong>${String.fromCharCode(65+q.ans)}. ${q.opts[q.ans]}</strong><br>${q.exp}`;
+      corrections.push({ ok: isCorrect, cas: cas.num, q: q.q, correct: q.opts[q.ans], given: q.opts[selCas[ci][qi]] });
+    });
+  });
+
+  const pct = Math.round(score/total*100);
+  let mention = pct >= 90 ? '🏆 Excellent Clinicien !' : pct >= 75 ? '🎓 Bon niveau clinique' : pct >= 60 ? '✔️ Passable — Retravailler les cas' : '📚 Insuffisant — Relire les chapitres';
+  let mc = pct >= 90 ? '#81c784' : pct >= 75 ? '#4fc3f7' : pct >= 60 ? '#ffb74d' : '#ef5350';
+
+  document.getElementById('score-big-cas').textContent = score;
+  document.getElementById('score-mention-cas').textContent = mention;
+  document.getElementById('score-mention-cas').style.color = mc;
+
+  const cl = document.getElementById('correction-list-cas');
+  cl.innerHTML = '<h3 style="color:var(--gold);font-family:Playfair Display,serif;margin-bottom:16px;">Correction des 10 cas cliniques</h3>';
+  corrections.forEach((c, i) => {
+    cl.innerHTML += `<div class="correction-item"><span class="ci-icon">${c.ok?'✅':'❌'}</span><div class="ci-text"><strong>Cas ${c.cas} — Q${(i%5)+1} :</strong> ${c.q}<br>${c.ok ? `✓ ${c.correct}` : `Ta réponse : ${c.given} → Correct : <span style="color:var(--accent2)">${c.correct}</span>`}</div></div>`;
+  });
+
+  document.getElementById('score-board-cas').classList.add('show');
+  document.getElementById('btn-submit-cas').disabled = true;
+  document.getElementById('score-board-cas').scrollIntoView({behavior:'smooth'});
+}
+
+function resetCas() {
+  selCas = casData.map(c => new Array(c.qcms.length).fill(null));
+  document.getElementById('score-board-cas').classList.remove('show');
+  document.getElementById('btn-submit-cas').disabled = false;
+  buildCas();
+}
+
+// Init
+buildQCM20();
+buildCas();
+</script>
+</body>
+</html>
